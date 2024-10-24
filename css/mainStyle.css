@@ -1,0 +1,13 @@
+body {
+  background-color: powderblue;
+}
+h1 {
+  color: blue;
+}
+p {
+  color: red;
+}
+.custom-table {
+            table-layout: auto; /* Use auto layout to adjust based on content */
+            width: auto; /* Set width to auto to prevent stretching */
+        }
