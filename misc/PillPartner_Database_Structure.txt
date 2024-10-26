@@ -1,0 +1,105 @@
+-- CEN 3031 Final Project
+-- Project: PillPartner; Team: Small Pharma
+
+--
+-- Drop all old tables
+--
+
+START TRANSACTION;
+DROP TABLE IF EXISTS `intakes`;
+DROP TABLE IF EXISTS `prescriptions`;
+DROP TABLE IF EXISTS `medications`;
+DROP TABLE IF EXISTS `users`;
+COMMIT;
+
+--
+-- Create tables
+--
+
+START TRANSACTION;
+
+--
+-- Table structure for tables
+--
+
+CREATE TABLE `intakes` (
+  `IntakeID` int(11) UNSIGNED NOT NULL,
+  `PrescriptionID` int(11) UNSIGNED NOT NULL,
+  `IntakeTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `prescriptions` (
+  `PrescriptionID` int(11) UNSIGNED NOT NULL,
+  `UserID` int(11) UNSIGNED NOT NULL,
+  `MedicationID` int(11) UNSIGNED NOT NULL,
+  `PrescriptionTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `PrescriptionUnit` text,
+  `PrescriptionDosage` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `medications` (
+  `MedicationID` int(11) UNSIGNED NOT NULL,
+  `MedicationBrand` text NOT NULL,
+  `MedicationName` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `users` (
+  `UserID` int(11) UNSIGNED NOT NULL,
+  `UserName` text NOT NULL,
+  `UserPassword` text NOT NULL,
+  `UserEmail` text,
+  `UserFirstName` tinytext NOT NULL,
+  `UserLastName` tinytext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for tables
+--
+ALTER TABLE `intakes`
+  ADD PRIMARY KEY (`IntakeID`),
+  ADD KEY `PrescriptionID` (`PrescriptionID`);
+
+ALTER TABLE `prescriptions`
+  ADD PRIMARY KEY (`PrescriptionID`),
+  ADD KEY `MedicationID` (`MedicationID`),
+  ADD KEY `UserID` (`UserID`);
+
+ALTER TABLE `medications`
+  ADD PRIMARY KEY (`MedicationID`);
+
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`UserID`),
+  ADD UNIQUE KEY `UNIQUE` (`UserName`(32));
+
+--
+-- AUTO_INCREMENT for tables
+--
+ALTER TABLE `intakes`
+  MODIFY `IntakeID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `prescriptions`
+  MODIFY `PrescriptionID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  
+ALTER TABLE `medications`
+  MODIFY `MedicationID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `users`
+  MODIFY `UserID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+COMMIT;
+
+
+--
+-- Create constraints for tables
+--
+
+START TRANSACTION;
+
+ALTER TABLE `intakes`
+  ADD CONSTRAINT `intakes_ibfk_1` FOREIGN KEY (`PrescriptionID`) REFERENCES `prescriptions` (`PrescriptionID`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE `prescriptions`
+  ADD CONSTRAINT `prescriptions_ibfk_1` FOREIGN KEY (`MedicationID`) REFERENCES `medications` (`MedicationID`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `prescriptions_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+COMMIT;
