@@ -1,3 +1,13 @@
+<?php
+
+include_once("includes/site_construct.inc");
+
+// User is not logged in
+if ((!isset($_SESSION['UserName'])) || (!isset($_SESSION['UserPassword']))) {
+	redirect('login.php');
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,11 +28,13 @@
 		</div>
 		<div class="col-7">
 			<p class="mainFont2">Welcome Partner!</p>
+			<p><strong>Logged in as:</strong> <?php echo $_SESSION['UserFirstName']." ".$_SESSION['UserLastName']. " (".$_SESSION['UserName'].")"; ?></p>
 		</div>
 		<div class="col-1">
 			<a href="settings.html">
 			<img src="images/cog.png" alt="Settings" class="settings-icon position-absolute top-0 end-0 m-3" style="width: 3vw; height: 3vw;">
 			</a>
+			<a href='logout.php'>Log Out</a>
 		</div>
 		<div class="w-100"></div>
 		<div class="col-4 text-center" style="margin-top: auto;">
