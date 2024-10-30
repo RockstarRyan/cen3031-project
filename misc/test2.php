@@ -1,31 +1,19 @@
 <?php
 
-include_once("includes/site_construct.inc");
+include_once("test2_stuff.inc");
 
-// User is not logged in
-if ((!isset($_SESSION['UserName'])) || (!isset($_SESSION['UserPassword']))) {
-	redirect('login.php');
+$user_meds = $db->query("SELECT * FROM medications");
+
+if ($user_meds) {
+
+    $user_meds = $user_meds->fetch_all(MYSQLI_ASSOC);
+    
+} else {
+    echo "Error: " . $db->error;
 }
 
-$user_meds = $db->query(
-	"SELECT 
-        prescriptions.PrescriptionID,
-        prescriptions.PrescriptionTime,
-        prescriptions.PrescriptionUnit,
-        prescriptions.PrescriptionDosage,
-    	medications.MedicationID,
-        medications.MedicationBrand,
-        medications.MedicationName
-    FROM 
-        prescriptions
-    INNER JOIN 
-        medications ON prescriptions.MedicationID = medications.MedicationID
-    WHERE 
-        prescriptions.UserID = $_SESSION[“UserID”]
-")->fetch_all(MYSQLI_ASSOC);
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +37,7 @@ $user_meds = $db->query(
 			<p><strong>Logged in as:</strong> <?php echo $_SESSION['UserFirstName']." ".$_SESSION['UserLastName']. " (".$_SESSION['UserName'].")"; ?></p>
 		</div>
 		<div class="col-1">
-			<a href="settings.php">
+			<a href="settings.html">
 			<img src="images/cog.png" alt="Settings" class="settings-icon position-absolute top-0 end-0 m-3" style="width: 3vw; height: 3vw;">
 			</a>
 			<a href='logout.php'>Log Out</a>
@@ -96,23 +84,21 @@ $user_meds = $db->query(
 				</tr>
 			  </thead>
 			  <tbody>
+                <?php
+                foreach ($user_meds as $med) {
+                    echo "<tr>";
+                    echo "<td><img src=\"images/DummyPill1.jpg\" alt=\"{$med['MedicationID']}\" class=\"pill1\" style=\"width: 10vw; height: 10vw;\"></td>";
+                    echo "<td class=\"text-nowrap\">{$med['MedicationName']}</td>";
+                    echo "<td class=\"text-nowrap\">{$med['PrescriptionDosage']}</td>";
+                    echo "<td>yes</td>";
+                    echo "</tr>";
+                }
+                ?>
 				<tr>
 				  <td><img src="images/DummyPill1.jpg" alt = "Pill 1" class="pill1" style="width: 10vw; height: 10vw;"></img></td>
 				  <td  class="text-nowrap">Med1</td>
 				  <td  class="text-nowrap">2x per day</td>
 				  <td>yes</td>
-				</tr>
-				<tr>
-				  <td><img src="images/DummyPill2.jpg" alt = "Pill 2" class="pill2" style="width: 10vw; height: 10vw;"></img></td>
-				  <td  class="text-nowrap">Med2</td>
-				  <td  class="text-nowrap">1x per week</td>
-				  <td>yes</td>
-				</tr>
-				<tr>
-				  <td><img src="images/DummyPill3.jpg" alt = "Pill 3" class="pill3" style="width: 10vw; height: 10vw;"></img></td>
-				  <td  class="text-nowrap">Med3</td>
-				  <td  class="text-nowrap">1x per day</td>
-				  <td>no</td>
 				</tr>
 			  </tbody>
 			</table>
