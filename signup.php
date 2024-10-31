@@ -20,7 +20,6 @@ if ((isset($_POST['UserName'])) && (isset($_POST['UserPassword'])) && (isset($_P
 
     if ($row_data['UserPassword'] == $_POST['ConfirmPassword']) {
         $result = $db->insertOne('users',$row_data,false,true);
-        echo var_dump($result);
         //echo var_dump($row_data).var_dump($user_id);
         if (!is_nan($result)) {
             $row_data['UserID'] = $result;
