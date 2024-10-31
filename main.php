@@ -31,7 +31,7 @@ if ((!isset($_SESSION['UserName'])) || (!isset($_SESSION['UserPassword']))) {
 			<p><strong>Logged in as:</strong> <?php echo $_SESSION['UserFirstName']." ".$_SESSION['UserLastName']. " (".$_SESSION['UserName'].")"; ?></p>
 		</div>
 		<div class="col-1">
-			<a href="settings.html">
+			<a href="settings.php">
 			<img src="images/cog.png" alt="Settings" class="settings-icon position-absolute top-0 end-0 m-3" style="width: 3vw; height: 3vw;">
 			</a>
 			<a href='logout.php'>Log Out</a>
