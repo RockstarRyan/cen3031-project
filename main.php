@@ -7,22 +7,31 @@ if ((!isset($_SESSION['UserName'])) || (!isset($_SESSION['UserPassword']))) {
 	redirect('login.php');
 }
 
-$user_meds = $db->query(
-	"SELECT 
-        prescriptions.PrescriptionID,
-        prescriptions.PrescriptionTime,
-        prescriptions.PrescriptionUnit,
-        prescriptions.PrescriptionDosage,
-    	medications.MedicationID,
-        medications.MedicationBrand,
-        medications.MedicationName
-    FROM 
-        prescriptions
-    INNER JOIN 
-        medications ON prescriptions.MedicationID = medications.MedicationID
-    WHERE 
-        prescriptions.UserID = $_SESSION[“UserID”]
-")->fetch_all(MYSQLI_ASSOC);
+//prints all of our medications
+$user_meds = $db->query("SELECT * FROM medications");
+
+if ($user_meds) {
+
+    $user_meds = $user_meds->fetch_all(MYSQLI_ASSOC);
+    
+}
+//prints only a specific users medications, implement after adding prescriptions to users
+// $user_meds = $db->query(
+// 	"SELECT 
+//         prescriptions.PrescriptionID,
+//         prescriptions.PrescriptionTime,
+//         prescriptions.PrescriptionUnit,
+//         prescriptions.PrescriptionDosage,
+//     	medications.MedicationID,
+//         medications.MedicationBrand,
+//         medications.MedicationName
+//     FROM 
+//         prescriptions
+//     INNER JOIN 
+//         medications ON prescriptions.MedicationID = medications.MedicationID
+//     WHERE 
+//         prescriptions.UserID = $_SESSION[“UserID”]
+// ")->fetch_all(MYSQLI_ASSOC);
 
 
 ?>
@@ -96,24 +105,17 @@ $user_meds = $db->query(
 				</tr>
 			  </thead>
 			  <tbody>
-				<tr>
-				  <td><img src="images/DummyPill1.jpg" alt = "Pill 1" class="pill1" style="width: 10vw; height: 10vw;"></img></td>
-				  <td  class="text-nowrap">Med1</td>
-				  <td  class="text-nowrap">2x per day</td>
-				  <td>yes</td>
-				</tr>
-				<tr>
-				  <td><img src="images/DummyPill2.jpg" alt = "Pill 2" class="pill2" style="width: 10vw; height: 10vw;"></img></td>
-				  <td  class="text-nowrap">Med2</td>
-				  <td  class="text-nowrap">1x per week</td>
-				  <td>yes</td>
-				</tr>
-				<tr>
-				  <td><img src="images/DummyPill3.jpg" alt = "Pill 3" class="pill3" style="width: 10vw; height: 10vw;"></img></td>
-				  <td  class="text-nowrap">Med3</td>
-				  <td  class="text-nowrap">1x per day</td>
-				  <td>no</td>
-				</tr>
+			  <?php
+                foreach ($user_meds as $med) {
+                    echo "<tr>";
+                    echo "<td><img src=\"images/DummyPill1.jpg\" alt=\"{$med['MedicationID']}\" class=\"pill1\" style=\"width: 10vw; height: 10vw;\"></td>";
+                    echo "<td class=\"text-nowrap\">{$med['MedicationName']}</td>";
+					//echo "<td class=\"text-nowrap\">{$med['PrescriptionDosage']}</td>";
+                    echo "<td class=\"text-nowrap\">Fill with dosage</td>";
+                    echo "<td>yes</td>";
+                    echo "</tr>";
+                }
+                ?>
 			  </tbody>
 			</table>
 		</div>
