@@ -7,31 +7,26 @@ if ((!isset($_SESSION['UserName'])) || (!isset($_SESSION['UserPassword']))) {
 	redirect('login.php');
 }
 
-//prints all of our medications
-$user_meds = $db->query("SELECT * FROM medications");
 
-if ($user_meds) {
-
-    $user_meds = $user_meds->fetch_all(MYSQLI_ASSOC);
-    
-}
 //prints only a specific users medications, implement after adding prescriptions to users
-// $user_meds = $db->query(
-// 	"SELECT 
-//         prescriptions.PrescriptionID,
-//         prescriptions.PrescriptionTime,
-//         prescriptions.PrescriptionUnit,
-//         prescriptions.PrescriptionDosage,
-//     	medications.MedicationID,
-//         medications.MedicationBrand,
-//         medications.MedicationName
-//     FROM 
-//         prescriptions
-//     INNER JOIN 
-//         medications ON prescriptions.MedicationID = medications.MedicationID
-//     WHERE 
-//         prescriptions.UserID = $_SESSION[“UserID”]
-// ")->fetch_all(MYSQLI_ASSOC);
+$user_id = (int)$_SESSION['UserID'];
+
+$user_meds = $db->query(
+	"SELECT 
+        prescriptions.PrescriptionID,
+        prescriptions.PrescriptionTime,
+        prescriptions.PrescriptionUnit,
+        prescriptions.PrescriptionDosage,
+    	medications.MedicationID,
+        medications.MedicationBrand,
+        medications.MedicationName
+    FROM 
+        prescriptions
+    INNER JOIN 
+        medications ON prescriptions.MedicationID = medications.MedicationID
+    WHERE 
+        prescriptions.UserID = $user_id
+")->fetch_all(MYSQLI_ASSOC);
 
 
 ?>
