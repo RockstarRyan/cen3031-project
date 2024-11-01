@@ -45,46 +45,18 @@ $user_meds = $db->query(
 <div class="container-fluid">
 	<!-- set up bootstrap grid system to make page format responsive -->
 	<div class="row">
-		<div class="col-4">
-			<img src="images/PillPartner.png" alt="PillPartner Avatar" class="pill-partner position-absolute top-0 end-1 m-3" style="width: 30vw; height: 30vw">
+		<div class="col-4 d-flex flex-column align-items-center">
+			<img src="images/PillPartner.png" alt="PillPartner Avatar" class="pill-partner text-start text m-3" style="width: 30vw; height: 30vw">
+			<!-- Button to Open Modal -->
+				<button type="button" class="btn btn-primary med-button " data-bs-toggle="modal" data-bs-target="#myModal">
+					Add Medication
+				</button>
+			
 		</div>
 		<div class="col-7">
 			<p class="mainFont2">Welcome Partner!</p>
 			<p><strong>Logged in as:</strong> <?php echo $_SESSION['UserFirstName']." ".$_SESSION['UserLastName']. " (".$_SESSION['UserName'].")"; ?></p>
-		</div>
-		<div class="col-1">
-			<a href="settings.php">
-			<img src="images/cog.png" alt="Settings" class="settings-icon position-absolute top-0 end-0 m-3" style="width: 3vw; height: 3vw;">
-			</a>
-			<a href='logout.php'>Log Out</a>
-		</div>
-		<div class="w-100"></div>
-		<div class="col-4 text-center" style="margin-top: auto;">
-		 <!-- Button to Open Modal -->
-			<button type="button" class="btn btn-primary med-button " data-bs-toggle="modal" data-bs-target="#myModal">
-				Add Medication
-			</button>
-			<!-- Modal Structure -->
-			<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="myModalLabel">Add New Medication</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							This is the content inside the popup.
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save Medication</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-7">
-		  <table class="table table-bordered custom-table">
+			<table class="table table-bordered custom-table">
 			<thead class="thead-dark">
 			<colgroup>
 				<col style="width: 20%;">
@@ -113,9 +85,114 @@ $user_meds = $db->query(
 			  </tbody>
 			</table>
 		</div>
-		<div class="w-100"></div>
-		<div class="col-1"></div>
-		<div class="col-4 p-0">
+		<div class="col-1">
+			<a href="settings.php">
+			<img src="images/cog.png" alt="Settings" class="settings-icon position-absolute top-0 end-0 m-3" style="width: 3vw; height: 3vw;">
+			</a>
+			<a href='logout.php'>Log Out</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-8 text-center" style="margin-top: auto;">
+		 
+			<!-- Modal Structure -->
+			<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog model-dialog-centered modal-xl">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title" id="myModalLabel">Add New Medication</h2>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<form method="post">
+							<div class="container-fluid">
+							<form>
+								<div class="row mb-3">
+									<div class="col-4 text-end">
+										<label style="font-size: 2vw;" for="UserName"><b>Medication name: </b></label>
+									</div>
+									<div class="col-4 text-start">
+										<input type="text" placeholder="Type Name..." name="UserName" style="width: 10vw; height: 2vw; font-size: 1vw;" required></input>
+									</div>
+								</div>
+								<div class="row mb-3">
+									<div class="col-4 text-end">
+									<label style="font-size: 2vw;" for="UserName"><b>Medication dosage: </b></label>
+									</div>
+									<div class="col-8 text-start text-wrap" style="display: flex; gap: 10px;">
+									<label style="font-size: 1vw;" for="UserPassword"><b>Take </b></label>
+										<form>
+											<div class="form-group">
+												<select class="dynamicDropdown" id="firstDropdown" style="width: auto; font-size: 0.9vw;" onchange="resizeDropdown(this)">
+													<option value="" disabled selected>Select an amount</option>
+													<option value="">--Select--</option>
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+												</select>
+											</div>
+											<label style="font-size: 1vw;" for="UserPassword"><b>per </b></label>
+											<div class="form-group">
+												<select class="dynamicDropdown" id="secondDropdown" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);">
+													<option value="" disabled selected>Select a frequency</option>
+													<option value="">--Select--</option>
+													<option value="1">day</option>
+													<option value="2">week</option>
+													<option value="3">month</option>
+												</select>
+											</div>
+											<div class="form-group" id="thirdDropdown" style="display: none; font-size: 0.9vw;" onchange="resizeDropdown(this)">
+													<label style="font-size: 1vw;" for="UserPassword"><b>on </b></label>
+													<select class="dynamicDropdown" id="thirdDropdownSelect">
+														<option value="">--Select--</option>
+														<option value="option1">Monday</option>
+														<option value="option2">Tuesday</option>
+														<option value="option2">Wednesday</option>
+														<option value="option1">Thursday</option>
+														<option value="option2">Friday</option>
+														<option value="option2">Saturday</option>
+														<option value="option2">Sunday</option>
+													</select>
+											</div>									
+										</form>
+									</div>
+								</div>
+								<div class="row mb-3">
+									<div class="col-4 text-end text-wrap">
+										<label style="font-size: 2vw;" for="UserPassword"><b>Image of medication:</b></label> 
+									</div>
+									<div class="col-4 text-start text-wrap">
+										<div class="form-group">
+											<label style="font-size: 1vw;" for="imageUpload">Select image to upload:</label>
+											<input type="file" class="form-control-file" id="imageUpload" style="font-size: .8vw;" accept="image/*">
+										</div>
+										<button type="submit" class="btn btn-primary" style="font-size: 1vw">Upload</button>
+									</div>
+								</div>
+								<div class="row mb-3">
+									<div class="col-4 text-end text-wrap">
+										<label style="font-size: 2vw;" for="UserPassword"><b>Notes:</b></label>
+									</div>
+									<div class="col-4 text-start text-wrap">
+										<input type="password" placeholder="Type here..." name="UserPassword" style="width: 30vw; height: 10vw; font-size: 1vw;" required></input>	
+									</div>
+								</div>	
+							</form>
+							</div>
+						</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save Medication</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="col-7">
+		  
 			
 		</div>
 		
@@ -128,5 +205,32 @@ $user_meds = $db->query(
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Custom JavaScript -->
     <script src="js/scripts.js"></script>
+	<script> 
+		function toggleThirdDropdown() {
+			var secondDropdown = document.getElementById("secondDropdown");
+			var thirdDropdown = document.getElementById("thirdDropdown");
+
+			
+			// Show second dropdown if the specific option is selected
+			if (secondDropdown.value === "2") {
+				thirdDropdown.style.display = "block";
+			} else {
+				thirdDropdown.style.display = "none";
+			}
+		}
+	</script>
+	<script>
+		function resizeDropdown(dropdown){
+			let tempSpan = document.createElement("span");
+			tempSpan.style.visibilisty = "hidden";
+			tempSpan.style.position = "absolute";
+			tempSpan.style.whiteSpace = "nowrap";
+			tempSpan.innerText = dropdown.options[dropdown.selectedIndex].text;
+			document.body.appendChild(tempSpan);
+			
+			dropdown.style.width = `${tempSpan.offsetWidth + 30}px`; 
+			document.body.removeChild(tempSpan);
+		}
+	</script>
 </body>
 </html>

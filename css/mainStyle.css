@@ -51,3 +51,9 @@ body {
  .custom-height {
         height: 2vh; /* Set a fixed height (e.g., 400px) */
 }
+.add-height{
+	height: 5vh;
+}
+.add-width{
+	width: 10vw; 
+}
