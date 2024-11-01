@@ -105,8 +105,7 @@ $user_meds = $db->query(
                     echo "<tr>";
                     echo "<td><img src=\"images/DummyPill1.jpg\" alt=\"{$med['MedicationID']}\" class=\"pill1\" style=\"width: 10vw; height: 10vw;\"></td>";
                     echo "<td class=\"text-nowrap\">{$med['MedicationName']}</td>";
-					//echo "<td class=\"text-nowrap\">{$med['PrescriptionDosage']}</td>";
-                    echo "<td class=\"text-nowrap\">Fill with dosage</td>";
+					echo "<td class=\"text-nowrap\">{$med['PrescriptionDosage']} {$med['PrescriptionUnit']}</td>";
                     echo "<td>yes</td>";
                     echo "</tr>";
                 }
