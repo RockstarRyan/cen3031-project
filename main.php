@@ -102,90 +102,100 @@ $user_meds = $db->query(
 			<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog model-dialog-centered modal-xl">
 					<div class="modal-content">
-						<div class="modal-header">
-							<h1 class="modal-title" id="myModalLabel">Add New Medication</h2>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<form method="post">
-							<div class="container-fluid">
-							<form>
-								<div class="row mb-3">
-									<div class="col-4 text-end">
-										<label style="font-size: 2vw;" for="UserName"><b>Medication name: </b></label>
-									</div>
-									<div class="col-4 text-start">
-										<input type="text" placeholder="Type Name..." name="UserName" style="width: 10vw; height: 2vw; font-size: 1vw;" required></input>
-									</div>
-								</div>
-								<div class="row mb-3">
-									<div class="col-4 text-end">
-									<label style="font-size: 2vw;" for="UserName"><b>Medication dosage: </b></label>
-									</div>
-									<div class="col-8 text-start text-wrap" style="display: flex; gap: 10px;">
-									<label style="font-size: 1vw;" for="UserPassword"><b>Take </b></label>
-										<form>
-											<div class="form-group">
-												<select class="dynamicDropdown" id="firstDropdown" style="width: auto; font-size: 0.9vw;" onchange="resizeDropdown(this)">
-													<option value="" disabled selected>Select an amount</option>
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-												</select>
+						<form>
+							<div class="modal-header">
+								<h1 class="modal-title" id="myModalLabel">Add New Medication</h2>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="container-fluid">
+										<div class="row mb-3">
+											<div class="col-4 text-end">
+												<label style="font-size: 2vw;" for="UserName"><b>Medication name: </b></label>
 											</div>
-											<label style="font-size: 1vw;" for="UserPassword"><b>per </b></label>
-											<div class="form-group">
-												<select class="dynamicDropdown" id="secondDropdown" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);">
-													<option value="" disabled selected>Select a frequency</option>
-													<option value="1">day</option>
-													<option value="2">week</option>
-													<option value="3">month</option>
-												</select>
+											<div class="col-4 text-start">
+												<input type="text" placeholder="Type Name..." name="medicationName" style="width: 10vw; height: 2vw; font-size: 1vw;" required></input>
 											</div>
-											<div class="form-group" id="thirdDropdown" style="display: none; font-size: 0.9vw;" >
-													<label style="font-size: 1vw;" for="UserPassword"><b>on </b></label>
-													<select class="dynamicDropdown" id="thirdDropdownSelect" onchange="resizeDropdown(this)">
-														<option value="option1">Monday</option>
-														<option value="option2">Tuesday</option>
-														<option value="option2">Wednesday</option>
-														<option value="option1">Thursday</option>
-														<option value="option2">Friday</option>
-														<option value="option2">Saturday</option>
-														<option value="option2">Sunday</option>
-													</select>
-											</div>									
-										</form>
-									</div>
-								</div>
-								<div class="row mb-3">
-									<div class="col-4 text-end text-wrap">
-										<label style="font-size: 2vw;" for="UserPassword"><b>Image of medication:</b></label> 
-									</div>
-									<div class="col-4 text-start text-wrap">
-										<div class="form-group">
-											<label style="font-size: 1vw;" for="imageUpload">Select image to upload:</label>
-											<input type="file" class="form-control-file" id="imageUpload" style="font-size: .8vw;" accept="image/*">
 										</div>
-										<button type="submit" class="btn btn-primary" style="font-size: 1vw">Upload</button>
+										<div class="row mb-3">
+											<div class="col-4 text-end">
+											<label style="font-size: 2vw;" for="UserName"><b>Medication dosage: </b></label>
+											</div>
+											<div class="col-8 text-start text-wrap" style="display: flex; gap: 10px;">
+											<label style="font-size: 1vw;"><b>Take </b></label>
+													<div class="form-group">
+														<input type="text" placeholder="Type..." name="medicationAmount" style="width: 4vw; height: 1.50vw; font-size: 1vw;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+													</div>
+													<div class="form-group">
+														<select class="dynamicDropdown" id="firstDropdown" style="width: auto; font-size: 0.9vw;" onchange="resizeDropdown(this)" required>
+															<option value="" disabled selected>Select an amount</option>
+															<option value="1">mg</option>
+															<option value="2">ml</option>
+															<option value="3">capsules</option>
+															<option value="4">tablets</option>
+														</select>
+													</div>
+													<label style="font-size: 1vw;" for="UserPassword"><b>per </b></label>
+													<div class="form-group">
+														<select class="dynamicDropdown" id="secondDropdown" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
+															<option value="" disabled selected>Select a frequency</option>
+															<option value="1">day</option>
+															<option value="2">week</option>
+															<option value="3">month</option>
+														</select>
+													</div>
+													<div class="form-group" id="thirdDropdown" style="display: none; font-size: 0.9vw;" >
+														<label style="font-size: 1vw;"><b> on </b></label>
+														<select class="dynamicDropdown" id="thirdDropdownSelect" onchange="resizeDropdown(this)" required>
+															<option value="option1">Monday</option>
+															<option value="option2">Tuesday</option>
+															<option value="option2">Wednesday</option>
+															<option value="option1">Thursday</option>
+															<option value="option2">Friday</option>
+															<option value="option2">Saturday</option>
+															<option value="option2">Sunday</option>
+														</select>
+													</div>	
+													<label style="font-size: 1vw;"><b> at </b></label>
+													<input type="text" placeholder="Hr" name="hourValue" style="width: 2.50vw; height: 1.50vw; font-size: 1vw;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+													<label style="font-size: 1vw;"><b>:</b></label>
+													<input type="text" placeholder="Min" name="minuteValue" style="width: 2.50vw; height: 1.50vw; font-size: 1vw;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+													<div class="form-group">
+														<select class="dynamicDropdown" id="fourthDropdwon" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
+															<option value="1">AM</option>
+															<option value="2">PM</option>
+														</select>
+													</div>
+													
+											</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-4 text-end text-wrap">
+												<label style="font-size: 2vw;" for="UserPassword"><b>Image of medication:</b></label> 
+											</div>
+											<div class="col-4 text-start text-wrap">
+												<div class="form-group">
+													<label style="font-size: 1vw;" for="imageUpload">Select image to upload:</label>
+													<input type="file" class="form-control-file" id="imageUpload" style="font-size: .8vw;" accept="image/*">
+												</div>
+												<button type="button" class="btn btn-primary" style="font-size: 1vw">Upload</button>
+											</div>
+										</div>
+										<div class="row mb-3">
+											<div class="col-4 text-end text-wrap">
+												<label style="font-size: 2vw;" for="UserPassword"><b>Notes:</b></label>
+											</div>
+											<div class="col-4 text-wrap">
+												<input type="text" placeholder="Type here..." name="UserPassword" style="width: 30vw; height: 10vw; font-size: 1vw; padding-top: 0.5vw;"></input>	
+											</div>
+										</div>	
 									</div>
 								</div>
-								<div class="row mb-3">
-									<div class="col-4 text-end text-wrap">
-										<label style="font-size: 2vw;" for="UserPassword"><b>Notes:</b></label>
-									</div>
-									<div class="col-4 text-wrap">
-										<input type="text" placeholder="Type here..." name="UserPassword" style="width: 30vw; height: 10vw; font-size: 1vw; padding-top: 0.5vw;" required></input>	
-									</div>
-								</div>	
-							</form>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Save Medication</button>
 							</div>
 						</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save Medication</button>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -229,6 +239,19 @@ $user_meds = $db->query(
 			document.body.appendChild(tempSpan);
 			
 			dropdown.style.width = `${tempSpan.offsetWidth + 30}px`; 
+			document.body.removeChild(tempSpan);
+		}
+	</script>
+	<script>
+		function resizeField(field){
+			let tempSpan = document.createElement("span");
+			tempSpan.style.visibilisty = "hidden";
+			tempSpan.style.position = "absolute";
+			tempSpan.style.whiteSpace = "nowrap";
+			tempSpan.innerText = field.options[field.selectedIndex].text;
+			document.body.appendChild(tempSpan);
+			
+			field.style.width = `${tempSpan.offsetWidth + 30}px`; 
 			document.body.removeChild(tempSpan);
 		}
 	</script>
