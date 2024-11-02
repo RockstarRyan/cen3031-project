@@ -60,14 +60,16 @@ $user_meds = $db->query(
 			<thead class="thead-dark">
 			<colgroup>
 				<col style="width: 20%;">
-				<col style="width: 40%;">
 				<col style="width: 30%;">
-				<col style="width: 10%;">
+				<col style="width: 20%;">
+				<col style="width: 20%;">
+				<col style="width: 5%;">
 			</colgroup>
 				<tr>
 				  <th scope="col">Picture</th>
 				  <th scope="col">Medication</th>
 				  <th scope="col">Dosage</th>
+				  <th scope="col">Notes</th>
 				  <th scope="col">Taken</th>
 				</tr>
 			  </thead>
@@ -78,6 +80,7 @@ $user_meds = $db->query(
                     echo "<td><img src=\"images/DummyPill1.jpg\" alt=\"{$med['MedicationID']}\" class=\"pill1\" style=\"width: 10vw; height: 10vw;\"></td>";
                     echo "<td class=\"text-nowrap\">{$med['MedicationName']}</td>";
 					echo "<td class=\"text-nowrap\">{$med['PrescriptionDosage']} {$med['PrescriptionUnit']}</td>";
+					echo "<td class=\"text-nowrap\">Fill with notes</td>";
                     echo "<td>yes</td>";
                     echo "</tr>";
                 }

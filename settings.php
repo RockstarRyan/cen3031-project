@@ -15,7 +15,7 @@
 	    <div class="row">
 			<!-- top right settings-->
 			<div class="col-2 text-start">
-				<a href="main.html">
+				<a href="main.php">
 				<img src="images/BackSymbol.png" alt="Back Symbol" class="settings-icon mt-3" style="width: 50px; height: 50px;">
 				</a>
 			</div>
