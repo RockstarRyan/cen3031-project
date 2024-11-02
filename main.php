@@ -125,7 +125,6 @@ $user_meds = $db->query(
 											<div class="form-group">
 												<select class="dynamicDropdown" id="firstDropdown" style="width: auto; font-size: 0.9vw;" onchange="resizeDropdown(this)">
 													<option value="" disabled selected>Select an amount</option>
-													<option value="">--Select--</option>
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -136,16 +135,14 @@ $user_meds = $db->query(
 											<div class="form-group">
 												<select class="dynamicDropdown" id="secondDropdown" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);">
 													<option value="" disabled selected>Select a frequency</option>
-													<option value="">--Select--</option>
 													<option value="1">day</option>
 													<option value="2">week</option>
 													<option value="3">month</option>
 												</select>
 											</div>
-											<div class="form-group" id="thirdDropdown" style="display: none; font-size: 0.9vw;" onchange="resizeDropdown(this)">
+											<div class="form-group" id="thirdDropdown" style="display: none; font-size: 0.9vw;" >
 													<label style="font-size: 1vw;" for="UserPassword"><b>on </b></label>
-													<select class="dynamicDropdown" id="thirdDropdownSelect">
-														<option value="">--Select--</option>
+													<select class="dynamicDropdown" id="thirdDropdownSelect" onchange="resizeDropdown(this)">
 														<option value="option1">Monday</option>
 														<option value="option2">Tuesday</option>
 														<option value="option2">Wednesday</option>
@@ -174,8 +171,8 @@ $user_meds = $db->query(
 									<div class="col-4 text-end text-wrap">
 										<label style="font-size: 2vw;" for="UserPassword"><b>Notes:</b></label>
 									</div>
-									<div class="col-4 text-start text-wrap">
-										<input type="password" placeholder="Type here..." name="UserPassword" style="width: 30vw; height: 10vw; font-size: 1vw;" required></input>	
+									<div class="col-4 text-wrap">
+										<input type="text" placeholder="Type here..." name="UserPassword" style="width: 30vw; height: 10vw; font-size: 1vw; padding-top: 0.5vw;" required></input>	
 									</div>
 								</div>	
 							</form>

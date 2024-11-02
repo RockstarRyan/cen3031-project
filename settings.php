@@ -29,7 +29,7 @@
 				
 			</div>
 			<div class="col-2 text-end">
-				<a href="faq.html">
+				<a href="faq.php">
 				<button class="btn btn-primary big-button">FAQ</button>
 				</a>
 			</div>
