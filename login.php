@@ -41,7 +41,7 @@ if ((isset($_POST['UserName'])) && (isset($_POST['UserPassword']))) {
     <div class="split-screen">
         <div class="message-container">
             <img class = "invert" src = "images/pill-logo.png" alt = "pill" width="200" height="200">
-            <h1 style="message-font">Pill Partner</h1>
+            <h1 class="message-font">Pill Partner</h1>
             <p1>Welcome back partner!</p1>
         </div>
         <div class="login-container">
