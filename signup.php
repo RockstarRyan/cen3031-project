@@ -48,35 +48,42 @@ if ((isset($_POST['UserName'])) && (isset($_POST['UserPassword'])) && (isset($_P
 	<!-- Bootstrap CSS (CDN) -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<!-- Custon css-->
-    <link rel="stylesheet" href="css/mainStyle.css"></head>
+    <link rel="stylesheet" href="css/loginStyle.css">
+</head>
 <body>
-    <div class="login-container">
-        <h1>Log In</h1>
-        <p1>Start managing your medications today</p1>
-        <img src = "images/pill-logo.png" alt = "pill">
-        <nav> 
-            <li><a href="login.php">Sign In</a></li> <!-- direct to login/sign up pages -->
-            <li><a href="signup.php">Sign Up</a></li>
-        </nav>
-        <?php if (isset($GLOBALS['sign_up_error']) && $GLOBALS['sign_up_error']!==false) {
-            echo "<p class='warning'>Error: ".$GLOBALS['sign_up_error']."</p>";
-        } ?>
-        <form method="post">
-            <label for="UserName"><b>Username</b></label>
-            <input type="text" placeholder="Type here..." name="UserName" required></input>
-            <label for="UserPassword"><b>Password</b></label>
-            <input type="password" placeholder="Type here..." name="UserPassword" required></input>
-            <label for="ConfirmPassword"><b>Confirm Password</b></label>
-            <input type="password" placeholder="Type here..." name="ConfirmPassword" required></input>
-            <label for="UserEmail"><b>Email</b></label>
-            <input type="text" placeholder="Type here..." name="UserEmail"></input>
-            <label for="UserFirstName"><b>First Name</b></label>
-            <input type="text" placeholder="Type here..." name="UserFirstName" required></input>
-            <label for="UserLastName"><b>Last Name</b></label>
-            <input type="text" placeholder="Type here..." name="UserLastName" required></input>
-            <button type='submit'>Sign Up</button>
-        </form>
+    <div class="split-screen">
+        <div class = "message-container"> 
+            <img class = "invert" src = "images/pill-logo.png" alt = "pill" width="200" height="200">
+            <p class="message-font"> Pill Partner </p>
+            <p1>Start managing your medications today</p1>
+        </div>
+        <div class="login-container">
+            <h1>Sign Up</h1>
+            <nav> 
+                <li><a href="login.php">Sign In</a></li> <!-- direct to login/sign up pages -->
+                <li><a href="signup.php">Sign Up</a></li>
+            </nav>
+            <?php if (isset($GLOBALS['sign_up_error']) && $GLOBALS['sign_up_error']!==false) {
+                echo "<p class='warning'>Error: ".$GLOBALS['sign_up_error']."</p>";
+            } ?>
+            <form method="post">
+                <label for="UserName"><b>Username</b></label>
+                <input type="text" placeholder="Type here..." name="UserName" required></input>
+                <label for="UserPassword"><b>Password</b></label>
+                <input type="password" placeholder="Type here..." name="UserPassword" required></input>
+                <label for="ConfirmPassword"><b>Confirm Password</b></label>
+                <input type="password" placeholder="Type here..." name="ConfirmPassword" required></input>
+                <label for="UserEmail"><b>Email</b></label>
+                <input type="text" placeholder="Type here..." name="UserEmail"></input>
+                <label for="UserFirstName"><b>First Name</b></label>
+                <input type="text" placeholder="Type here..." name="UserFirstName" required></input>
+                <label for="UserLastName"><b>Last Name</b></label>
+                <input type="text" placeholder="Type here..." name="UserLastName" required></input>
+                <button type='submit'>Sign Up</button>
+            </form>
+        </div>
     </div>
+    
 	<!-- Bootstrap JavaScript (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Custom JavaScript -->
