@@ -1,9 +1,9 @@
 body {
-  background-color: powderblue;
+  background-color: rgb(92, 189, 201);
 }
 .mainFont {
   color: teal;
-  font-size: 12vw;
+  font-size: calc(5rem + 5vw);
   white-space: nowrap;
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: white;
@@ -17,7 +17,7 @@ body {
 }
 .subFont {
   color: navy;
-  font-size: 4vw;
+  font-size: calc(2rem + 1vw);
   -webkit-text-stroke-width: 0px;
   -webkit-text-stroke-color: white;
 }
@@ -35,9 +35,9 @@ body {
 .nowrap-column {
     white-space: nowrap;
 }
-.big-button{
-	font-size: 5vw;
-	padding: 2vw 3vw;
+.faq-button{
+	font-size: calc(2rem + 0.30vw);
+	padding: calc(1rem + 0.30vw) calc(2rem + 0.30vw);
 	border: none;
 	background-color: navy;
 }
@@ -48,7 +48,7 @@ body {
 	white-space: nowrap;            /* Prevents wrapping */
 	background-color: navy;
 }
- .custom-height {
+.custom-height {
         height: 2vh; /* Set a fixed height (e.g., 400px) */
 }
 .add-height{
@@ -57,3 +57,32 @@ body {
 .add-width{
 	width: 10vw; 
 }
+.col-scaled {
+    transform: scale(4) translate(+6%, +0%);
+    transform-origin: top left;
+}
+
+@media (max-width: 800px) {
+	.col-scaled {
+	  transform: scale(3) translate(+10%, +0%); /* Smaller scaling on small screens */
+	  transform-origin: top left;
+	}
+}
+@media (min-width: 1250px) {
+	.col-scaled {
+	  transform: scale(6) translate(+4.50%, +0%); /* Smaller scaling on small screens */
+	  transform-origin: top left;
+	}
+}
+.col-custom {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+  }
+ .form-check-input.form-control-lg {
+    width: calc(7rem + 1vw); /* Larger width */
+    height: calc(4rem + 0.50vw); /* Larger height */
+	transform: scale(1) translate(+10%, +0%);
+	transform-origin: center;
+  }
+

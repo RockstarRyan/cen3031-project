@@ -14,24 +14,35 @@
 	<!-- set up bootstrap grid system to make page format responsive -->
 	    <div class="row">
 			<!-- top right settings-->
-			<div class="col-2 text-start">
+			<div class="col-12 ">
 				<a href="main.php">
-				<img src="images/BackSymbol.png" alt="Back Symbol" class="settings-icon mt-3" style="width: 50px; height: 50px;">
+				<img src="images/BackSymbol.png" alt="Back Symbol" class="settings-icon text-start mt-3" style="width: 5vw; height: 5vw;">
 				</a>
-			</div>
-			<!-- places at the top center-->
-			<div class="col-10">
+				
 				<p class="label mainFont text-center">Settings</p>
 			</div>
-			<div class="w-100"></div>
+			
+		</div>
+		<div class="row">
 			<div class="col-9">
 				<p class="label subFont">See our FAQ for Frequently Asked Questions and Guides</p>
-				
 			</div>
-			<div class="col-2 text-end">
+			<div class="col 1">
+			</div>
+			<div class="col-2 col-custom">
 				<a href="faq.php">
-				<button class="btn btn-primary big-button">FAQ</button>
+				<button class="btn btn-primary big-button faq-button">FAQ</button>
 				</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-9">
+				<p class="form-check-label subFont">Toggle Streak Feature On/OFF</p>
+			</div>
+			<div class="col 1">
+			</div>
+			<div class="col-2 col-custom form-check form-switch">
+				<input class="form-check-input form-control-lg" type="checkbox" role="switch" id="flexSwitchCheckDefault" checked>
 			</div>
 		</div>
     </div>
