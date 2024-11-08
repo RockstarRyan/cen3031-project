@@ -10,7 +10,7 @@ body {
 }
 .mainFont2 {
   color: white;
-  font-size: calc(4rem + 3vw);
+  font-size: calc(3.50rem + 2vw);
   font-style: bold;
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: white;
