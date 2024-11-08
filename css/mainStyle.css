@@ -2,15 +2,15 @@ body {
   background-color: rgb(92, 189, 201);
 }
 .mainFont {
-  color: teal;
+  color: white;
   font-size: calc(5rem + 5vw);
   white-space: nowrap;
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: white;
 }
 .mainFont2 {
-  color: teal;
-  font-size: 7vw;
+  color: white;
+  font-size: calc(4rem + 3vw);
   font-style: bold;
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: white;
@@ -23,14 +23,14 @@ body {
 }
 .flex-container {
 	display: flex;
-	justify-content: space-between; /* Positions elements on left and right */
-	align-items: center;            /* Centers elements vertically */
-	white-space: nowrap;            /* Prevents wrapping */
-	width: 100%;                    /* Ensures it stretches across the column */
+	justify-content: space-between; 
+	align-items: center;            
+	white-space: nowrap;           
+	width: 100%;                    
 }
 .custom-table {
-    width: 100%; /* Ensure the table uses 100% of the column width */
-	table-layout: auto; /* Use auto layout to adjust based on content */
+    width: 100%;
+	table-layout: auto; 
 }
 .nowrap-column {
     white-space: nowrap;
@@ -45,11 +45,11 @@ body {
 	font-size: 2vw;
 	padding: 1vw 2vw;
 	border: none;
-	white-space: nowrap;            /* Prevents wrapping */
+	white-space: nowrap;            
 	background-color: navy;
 }
 .custom-height {
-        height: 2vh; /* Set a fixed height (e.g., 400px) */
+        height: 2vh; 
 }
 .add-height{
 	height: 5vh;
@@ -64,25 +64,27 @@ body {
 
 @media (max-width: 800px) {
 	.col-scaled {
-	  transform: scale(3) translate(+10%, +0%); /* Smaller scaling on small screens */
+	  transform: scale(3) translate(+10%, +0%); 
 	  transform-origin: top left;
 	}
 }
 @media (min-width: 1250px) {
 	.col-scaled {
-	  transform: scale(6) translate(+4.50%, +0%); /* Smaller scaling on small screens */
+	  transform: scale(6) translate(+4.50%, +0%); 
 	  transform-origin: top left;
 	}
 }
 .col-custom {
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center;     /* Center vertically */
+    justify-content: center; 
+    align-items: center;     
   }
  .form-check-input.form-control-lg {
-    width: calc(7rem + 1vw); /* Larger width */
-    height: calc(4rem + 0.50vw); /* Larger height */
+    width: calc(7rem + 1vw); 
+    height: calc(4rem + 0.50vw); 
 	transform: scale(1) translate(+10%, +0%);
 	transform-origin: center;
   }
-
+  .custom-table-bg {
+    background-color: rgb(31, 199, 221); 
+  }

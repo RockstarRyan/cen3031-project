@@ -42,7 +42,24 @@ $user_meds = $db->query(
     <link rel="stylesheet" href="css/mainStyle.css">
 </head>
 <body>
-<div class="container-fluid">
+	<div class="container-fluid">
+	<!-- set up bootstrap grid system to make page format responsive -->
+	<div class="row">
+		<div class="col-4 d-flex flex-column align-items-center">
+		</div>
+		<div class="col-7">
+			<p class="mainFont2">Welcome Partner!</p>
+			  </tbody>
+			</table>
+		</div>
+		<div class="col-1">
+		<a href="settings.php">
+			<img src="images/cog.png" alt="Settings" class="settings-icon position-absolute top-0 end-0 m-3" style="width: 3vw; height: 3vw;">
+			</a>
+			<a href='logout.php'>Log Out</a>
+		</div>
+	</div>
+	<div class="container-fluid">
 	<!-- set up bootstrap grid system to make page format responsive -->
 	<div class="row">
 		<div class="col-4 d-flex flex-column align-items-center">
@@ -53,8 +70,7 @@ $user_meds = $db->query(
 				</button>
 			
 		</div>
-		<div class="col-7">
-			<p class="mainFont2">Welcome Partner!</p>
+		<div class="col-7" style="background-color: lightblue; border-width: 5px; border-style: solid; border-color: white; border-radius: 10px; padding: 15px;">
 			<p><strong>Logged in as:</strong> <?php echo $_SESSION['UserFirstName']." ".$_SESSION['UserLastName']. " (".$_SESSION['UserName'].")"; ?></p>
 			<table class="table table-bordered custom-table">
 			<thead class="thead-dark">
@@ -89,15 +105,10 @@ $user_meds = $db->query(
 			</table>
 		</div>
 		<div class="col-1">
-			<a href="settings.php">
-			<img src="images/cog.png" alt="Settings" class="settings-icon position-absolute top-0 end-0 m-3" style="width: 3vw; height: 3vw;">
-			</a>
-			<a href='logout.php'>Log Out</a>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-8 text-center" style="margin-top: auto;">
-		 
 			<!-- Modal Structure -->
 			<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog model-dialog-centered modal-xl">
