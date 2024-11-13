@@ -236,20 +236,34 @@ $user_meds = $db->query(
 												<label style="font-size: 2rem;" for="UserName"><b>Medication name: </b></label>
 											</div>
 											<div class="col-4 text-start">
-												<div class="form-group">
-														<select class="medicationDropdown" id="PrescriptionUnit" style="width: auto; font-size: 0.9vw;" onchange="resizeDropdown(this)" required>
-															<option value="" disabled selected>Select an amount</option>
-															<option value="1">med1</option>
-															<option value="2">med2</option>
-															<option value="3">med3</option>
-															<option value="4">med4</option>
-														</select>
-												</div>
+												<select class="dynamicDropdown" id="MedicationID" style="width: auto; font-size: 0.9vw;" onchange="resizeDropdown(this)" required>
+													<option value="MedicationBrand" disabled selected></option>
+													<option value="1">med1</option>
+													<option value="2">med2</option>
+													<option value="3">med3</option>
+													<option value="4">med4</option>
+												</select>
 												<button type="button" class="btn btn-primary custom-button" onclick="toggleCustomMed()">
 													Add New Medication
 												</button>
 												<div class="form-group" id="customMedication" style="display: none;">
 													<label style="font-size: 1rem;"><b>Take </b></label>
+													<div class="form-group">
+														<select class="dynamicDropdown" id="MedicationBrand" style="width: auto; font-size: 0.9vw;" onchange="resizeDropdown(this)" required>
+															<option value="MedicationBrand" disabled selected></option>
+															<option value="1">med1</option>
+															<option value="2">med2</option>
+															<option value="3">med3</option>
+															<option value="4">med4</option>
+														</select>
+														<select class="dynamicDropdown" id="MedicationName" style="width: auto; font-size: 0.9vw;" onchange="resizeDropdown(this)" required>
+															<option value="MedicationName" disabled selected></option>
+															<option value="1">med1</option>
+															<option value="2">med2</option>
+															<option value="3">med3</option>
+															<option value="4">med4</option>
+														</select>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -350,77 +364,85 @@ $user_meds = $db->query(
 	<!-- Bootstrap JavaScript (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Custom JavaScript -->
-    <script src="js/scripts.js"></script>
+    <!--script src="js/scripts.js"></script-->
 	<script> 
 	function toggleThirdDropdown() {
 		var secondDropdown = document.getElementById("secondDropdown");
 		var DayDropDown = document.getElementById("DayDropDown");
+		var MedicationID = document.getElementById("MedicationID");
+
 
 		
 		// Show second dropdown if the specific option is selected
-		if (DayDropDown.style.display === "none" || DayDropDown.style.display === "") {
+		if (DayDropDown.style.display == "none" || DayDropDown.style.display == "") {
 			DayDropDown.style.display = "block";
+			MedicationID.style.display = "none";
 		} else {
 			DayDropDown.style.display = "none";
+			MedicationID.style.display = "block";
 		}
 	}
-</script>
-<script>
-	function resizeDropdown(dropdown){
-		let tempSpan = document.createElement("span");
-		tempSpan.style.visibility = "hidden";
-		tempSpan.style.position = "absolute";
-		tempSpan.style.whiteSpace = "nowrap";
-		tempSpan.innerText = dropdown.options[dropdown.selectedIndex].text;
-		document.body.appendChild(tempSpan);
-		
-		dropdown.style.width = `${tempSpan.offsetWidth + 30}px`; 
-		document.body.removeChild(tempSpan);
-	}
-</script>
-<script>
-	function resizeField(field){
-		let tempSpan = document.createElement("span");
-		tempSpan.style.visibility = "hidden";
-		tempSpan.style.position = "absolute";
-		tempSpan.style.whiteSpace = "nowrap";
-		tempSpan.innerText = field.options[field.selectedIndex].text;
-		document.body.appendChild(tempSpan);
-		
-		field.style.width = `${tempSpan.offsetWidth + 30}px`; 
-		document.body.removeChild(tempSpan);
-	}
-</script>
-<script>
-	function toggleCustomMed() {
-		var dropdown = document.getElementById("toggleCustomMed");
-
-		// Toggle between hiding and showing the dropdown menu
-		if (dropdown.style.display === "none" || dropdown.style.display === "") {
-			dropdown.style.display = "block";
-		} else {
-			dropdown.style.display = "none";
+	</script>
+	<script>
+		function resizeDropdown(dropdown){
+			let tempSpan = document.createElement("span");
+			tempSpan.style.visibility = "hidden";
+			tempSpan.style.position = "absolute";
+			tempSpan.style.whiteSpace = "nowrap";
+			tempSpan.innerText = dropdown.options[dropdown.selectedIndex].text;
+			document.body.appendChild(tempSpan);
+			
+			dropdown.style.width = `${tempSpan.offsetWidth + 30}px`; 
+			document.body.removeChild(tempSpan);
 		}
-	}
-</script>
-<script>
-	const editModal = document.getElementById('editModal');
-	editModal.addEventListener('show.bs.modal', function (event) {
-		const button = event.relatedTarget; // Button that triggered the modal
-		const medication = button.getAttribute('data-medication');
-		const dosage = button.getAttribute('data-dosage');
-		const notes = button.getAttribute('data-notes');
-		
-		// Populate the modal fields
-		document.getElementById('medicationName').value = medication;
-		document.getElementById('dosage').value = dosage;
-		document.getElementById('notes').value = notes;
-	});
-	const addModal = document.getElementById('addModal');
-	addModal.addEventListener('show.bs.modal', function (event) {			
-		document.getElementById("customMedication").addEventListener("click", toggleCustomMed);
+	</script>
+	<script>
+		function resizeField(field){
+			let tempSpan = document.createElement("span");
+			tempSpan.style.visibility = "hidden";
+			tempSpan.style.position = "absolute";
+			tempSpan.style.whiteSpace = "nowrap";
+			tempSpan.innerText = field.options[field.selectedIndex].text;
+			document.body.appendChild(tempSpan);
+			
+			field.style.width = `${tempSpan.offsetWidth + 30}px`; 
+			document.body.removeChild(tempSpan);
+		}
+	</script>
+	<script>
+		function toggleCustomMed() {
+			var dropdown = document.getElementById("toggleCustomMed");
 
-	});
+			// Toggle between hiding and showing the dropdown menu
+			if (dropdown.style.display === "none" || dropdown.style.display === "") {
+				dropdown.style.display = "block";
+			} else {
+				dropdown.style.display = "none";
+			}
+		}
+	</script>
+	<script>
+    const editModal = document.getElementById('editModal');
+    editModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; // Button that triggered the modal
+        const medication = button.getAttribute('data-medication');
+        const dosage = button.getAttribute('data-dosage');
+        const notes = button.getAttribute('data-notes');
+        
+        // Populate the modal fields
+        document.getElementById('medicationName').value = medication;
+        document.getElementById('dosage').value = dosage;
+        document.getElementById('notes').value = notes;
+    });
+
+    const addModal = document.getElementById('addModal');
+    addModal.addEventListener('show.bs.modal', function (event) {            
+        const customMedicationButton = document.getElementById("customMedication");
+        
+        // Ensure event listener is added only once
+        customMedicationButton.removeEventListener("click", toggleCustomMed); // Remove any existing listener
+        customMedicationButton.addEventListener("click", toggleCustomMed);
+    });
 </script>
 </body>
 </html>
