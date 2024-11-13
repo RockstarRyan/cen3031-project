@@ -28,10 +28,7 @@ body {
 	white-space: nowrap;           
 	width: 100%;                    
 }
-.custom-table {
-    width: 100%;
-	table-layout: auto; 
-}
+
 .nowrap-column {
     white-space: nowrap;
 }
@@ -44,6 +41,13 @@ body {
 .med-button{
 	font-size: 2vw;
 	padding: 1vw 2vw;
+	border: none;
+	white-space: nowrap;            
+	background-color: navy;
+}
+.custom-button{
+	font-size: 0.50vw;
+	padding: 0.30rem 1rem;
 	border: none;
 	white-space: nowrap;            
 	background-color: navy;
