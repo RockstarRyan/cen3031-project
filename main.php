@@ -166,7 +166,7 @@ $user_meds = $db->query(
 													<option value="3">month</option>
 												</select>
 											</div>
-											<div class="form-group" id="thirdDropdown" style="display: none; font-size: 0.9vw;" >
+											<div class="form-group" id="DayDropDown" style="display: none; font-size: 0.9vw;" >
 												<label style="font-size: 1vw;"><b> on </b></label>
 												<select class="dynamicDropdown" id="thirdDropdownSelect" onchange="resizeDropdown(this)" required>
 													<option value="option1">Monday</option>
@@ -249,20 +249,8 @@ $user_meds = $db->query(
 												<div class="form-group" id="customMedication" style="display: none;">
 													<label style="font-size: 1rem;"><b>Take </b></label>
 													<div class="form-group">
-														<select class="dynamicDropdown" id="MedicationBrand" style="width: auto; font-size: 0.9vw;" onchange="resizeDropdown(this)" required>
-															<option value="MedicationBrand" disabled selected></option>
-															<option value="1">med1</option>
-															<option value="2">med2</option>
-															<option value="3">med3</option>
-															<option value="4">med4</option>
-														</select>
-														<select class="dynamicDropdown" id="MedicationName" style="width: auto; font-size: 0.9vw;" onchange="resizeDropdown(this)" required>
-															<option value="MedicationName" disabled selected></option>
-															<option value="1">med1</option>
-															<option value="2">med2</option>
-															<option value="3">med3</option>
-															<option value="4">med4</option>
-														</select>
+															<input type="text" placeholder="Type Medication Name..." name="MedicationName" style="width: 9.50rem; height: 1.50vw; font-size: 1vw;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+															<input type="text" placeholder="Type Medication Brand..." name="MedicationBrand" style="width: 9.50rem; height: 1.50vw; font-size: 1vw;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
 													</div>
 												</div>
 											</div>
@@ -294,9 +282,9 @@ $user_meds = $db->query(
 															<option value="3">month</option>
 														</select>
 													</div>
-													<div class="form-group" id="DayDropDown" style="display: none; font-size: 0.9vw;" >
+													<div class="form-group" id="DayDropDownContainer" style="font-size: 0.9vw;" >
 														<label style="font-size: 1rem;"><b> on </b></label>
-														<select class="dynamicDropdown" id="thirdDropdownSelect" onchange="resizeDropdown(this)" required>
+														<select class="dynamicDropdown" id="DayDropDown" style="display: none;" onchange="resizeDropdown(this)" required>
 															<option value="option1">Monday</option>
 															<option value="option2">Tuesday</option>
 															<option value="option2">Wednesday</option>
@@ -369,19 +357,31 @@ $user_meds = $db->query(
 	function toggleThirdDropdown() {
 		var secondDropdown = document.getElementById("secondDropdown");
 		var DayDropDown = document.getElementById("DayDropDown");
-		var MedicationID = document.getElementById("MedicationID");
-
-
 		
 		// Show second dropdown if the specific option is selected
-		if (DayDropDown.style.display == "none" || DayDropDown.style.display == "") {
+		if (secondDropdown.value == "2") {
 			DayDropDown.style.display = "block";
-			MedicationID.style.display = "none";
 		} else {
 			DayDropDown.style.display = "none";
-			MedicationID.style.display = "block";
 		}
 	}
+	</script>
+	<script>
+		function toggleCustomMed() {
+			var dropdown = document.getElementById("MedicationID");
+			var custom = document.getElementById("customMedication");
+			
+
+			// Toggle between hiding and showing the dropdown menu
+			if (dropdown.style.display === "none" || dropdown.style.display === "") {
+				dropdown.style.display = "block";
+				custom.style.display = "none";
+
+			} else {
+				dropdown.style.display = "none";
+				custom.style.display = "block";
+			}
+		}
 	</script>
 	<script>
 		function resizeDropdown(dropdown){
@@ -407,18 +407,6 @@ $user_meds = $db->query(
 			
 			field.style.width = `${tempSpan.offsetWidth + 30}px`; 
 			document.body.removeChild(tempSpan);
-		}
-	</script>
-	<script>
-		function toggleCustomMed() {
-			var dropdown = document.getElementById("toggleCustomMed");
-
-			// Toggle between hiding and showing the dropdown menu
-			if (dropdown.style.display === "none" || dropdown.style.display === "") {
-				dropdown.style.display = "block";
-			} else {
-				dropdown.style.display = "none";
-			}
 		}
 	</script>
 	<script>
