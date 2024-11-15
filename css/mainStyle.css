@@ -92,3 +92,6 @@ body {
   .custom-table-bg {
     background-color: rgb(31, 199, 221); 
   }
+  .add-modal-titles{
+	  font-size: calc(9rem + 1vw);
+  }
