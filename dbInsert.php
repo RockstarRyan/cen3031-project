@@ -49,6 +49,27 @@ include_once("includes/site_construct.inc");
 // // Close the statement and connection
 // $insertion->close();
 
+//Inserts Medications
+
+
+// $MedicationID = 3; 
+// $MedicationBrand = 'Big Pharma';
+// $MedicationName = 'Name';
+
+
+// $insertion = $db->prepare("INSERT INTO medications (MedicationID, MedicationBrand, MedicationName) VALUES (?, ?, ?)");
+// $insertion->bind_param("iss", $MedicationID, $MedicationBrand, $MedicationName);
+
+// // Execute the statement
+// if ($insertion->execute()) {
+//     echo "New record added successfully";
+// } else {
+//     echo "Error: " . $insertion->error;
+// }
+
+// // Close the statement and connection
+// $insertion->close();
+
 
 //Prints out all values of a particular table
 
