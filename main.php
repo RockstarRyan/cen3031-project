@@ -71,13 +71,14 @@ $user_meds = $db->query(
 				<div class="col-3 d-flex flex-column align-items-center" style="padding-right: calc(8rem + 5vw);">
 					<img src="images/PillPartner.png" alt="PillPartner Avatar" class="pill-partner text-start text m-3" style="width: calc(25rem + 10vw); height: calc(25rem + 10vw);">
 					<!-- Button to Open Modal -->
-						<button type="button" class="btn btn-primary med-button" data-bs-toggle="modal" data-bs-target="#addModal">
-							Add New Perscription
-						</button>
-					
+					<button type="button" class="btn btn-primary med-button" data-bs-toggle="modal" data-bs-target="#addModal">
+						Add New Prescription
+					</button>
 				</div>
 				<div class="col-9 table-background pt-3 pe-4 ps-4 pb-2">
 					<p><strong>Logged in as:</strong> <?php echo $_SESSION['UserFirstName']." ".$_SESSION['UserLastName']. " (".$_SESSION['UserName'].")"; ?></p>
+
+					<h2>Your Medications:</h2>
 
 					<table class="table table-bordered" style="width: 100%; ">
 					<thead class="thead-dark">
@@ -91,7 +92,7 @@ $user_meds = $db->query(
 					</colgroup>
 						<tr>
 						  <th scope="col">Picture</th>
-						  <th scope="col">Medication</th>
+						  <th scope="col">Medication Name</th>
 						  <th scope="col">Dosage</th>
 						  <th scope="col">Notes</th>
 						  <th scope="col">Intakes</th>
@@ -111,7 +112,7 @@ $user_meds = $db->query(
 							style=\"padding: calc(0.50 rem + 0.05vw)\"
 							data-bs-toggle=\"modal\" 
 							data-bs-target=\"#intakeModal\"
-							data-medication=\"" . $med['MedicationName'] . "\"
+							data-medication=\"" . $med['MedicationID'] . "\"
 							data-dosage=\"" . $med['PrescriptionDosage'] . " " . $med['PrescriptionUnit'] . "\"
 							data-notes=\"Fill with notes\"
 							>Add Intake</button>
@@ -137,12 +138,14 @@ $user_meds = $db->query(
 									<div class="container-fluid">
 										<div class="row mb-3">
 											<div class="col-4 text-end">
-												<label style="font-size: calc(1rem + 1vw);" for="UserName"><b>Medication name: </b></label>
+												<label style="font-size: calc(1rem + 1vw);" for="MedicationID"><b>Medication:</b></label>
 											</div>
-											<div class="col-4 text-start">
-												<label style="font-size: 2vw;" for="UserName"><b>[TODO Populate Brand] </b></label>
-												<label style="font-size: 2vw;" for="UserName"><b>[TODO Populate Name]</b></label>
-											</div>
+											<div class="col-4 text-start"><?php
+												// FILL IN: Replace $med_id with actual medication ID
+												$med_id = 5;
+												$medication = $db->selectRowsCustom('medications','*',[['MedicationID',$med_id]])[0];
+												echo "<select name='MedicationID' disabled><option value='".(5)."' selected>".$medication[1].", ".$medication[2]."</option></select>";
+											?></div>
 										</div>
 										<div class="row mb-3">
 											<div class="col-4 text-end">
@@ -224,17 +227,12 @@ $user_meds = $db->query(
 												</div>
 												<div class="col-8 text-start">
 													<div class="form-group" id="databaseMedication" style="display: block;">
-														<select class="dynamicDropdown" id="MedicationNameDatabase" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem;" onchange="resizeDropdown(this)" required>
-															<option value="" disabled selected>Select Medication Name...</option>
-															<option value="1">medname1</option>
-															<option value="2">medname2</option>
-															<option value="3">medname3</option>
-														</select>
-														<select class="dynamicDropdown" id="MedicationBrandDatabse" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem;" onchange="resizeDropdown(this)" required>
-															<option value="" disabled selected>Select Medication Brand...</option>
-															<option value="1">medname1</option>
-															<option value="2">medname2</option>
-															<option value="3">medname3</option>
+														<select class="dynamicDropdown" id="MedicationNameDatabase" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem;" onchange="resizeDropdown(this)" name='MedicationID' required>
+															<option value="" disabled selected>Select Medication Name...</option><?php 
+															$medications = $db->selectRowsFrom('medications');
+															foreach ($medications as $i=>$med) {
+																echo "<option value='".$med[0],"'>".$med[1].", ".$med[2]." [".$med[0]."]</option>";
+															}?>
 														</select>
 													</div>
 													
@@ -253,7 +251,7 @@ $user_meds = $db->query(
 											</div>
 											<div class="row mb-3">
 												<div class="col-4 text-end">
-												<label style="font-size: calc(1rem + 1vw);" for="PerscirptionDosage"><b>Dosage: </b></label>
+												<label style="font-size: calc(1rem + 1vw);" for="PrescriptionDosage"><b>Dosage: </b></label>
 												</div>
 												<div class="col-8 d-flex flex-wrap" style="display: flex; gap: 10px;">
 													<div class="form-group">
