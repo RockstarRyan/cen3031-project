@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page</title>
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/landingStyle.css">
+ 
 </head>
 <body>
-    <div class="Landing-container">
-        <h1 class="mainFont">Landing Page</h1>
-		<p><a href="login.php">Login</a> or <a></a href='signup.php'>Sign-Up</a></p>
-    </div>
 
-    <script src="js/scripts.js"></script>
+  <header class="landing-header py-3 shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="mb-0">PillPartner</h1>
+      <nav>
+        <a href="login.php" class="btn btn-outline-custom me-2">Login</a>
+        <a href="signup.php" class="btn btn-custom">Sign Up</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container text-center my-5">
+	<p class="mainFont">Welcome to PillPartner</p>
+    <p class="mainFont2">A web tool for the management of your health. Track medications, log intakes, print easy to read schedules and more.</p>
+    <a href="signup.php" class="btn btn-getStarted btn-lg mt-4">Get Started</a>
+  </main>
+
+  <footer class="landing-footer text-white py-3 mt-5">
+    <div class="container text-center">
+      <p class="mb-0">&copy; 2024 PillPartner. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

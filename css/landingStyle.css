@@ -1,0 +1,52 @@
+html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+}
+main {
+      flex: 1;
+}
+.landing-header{
+	background-color: rgb(31, 199, 221);
+	color: white;
+}
+.landing-footer{
+	background-color: rgb(31, 199, 221);
+	color: white;
+}
+.btn-outline-custom{
+  color: white; /* Text color */
+  border-color: white; /* Border color */
+  font-weight: bold;
+}
+.btn-custom{
+  color: rgb(31, 199, 221); /* Text color */
+  background-color: white; /* Border color */
+  border-color: white; /* Border color */
+  font-weight: bold;
+}
+.btn-getStarted{
+  color: white; /* Text color */
+  background-color: rgb(31, 199, 221); /* Border color */
+  border-color: rgb(31, 199, 221); /* Border color */
+  font-weight: bold;
+  font-size: calc(2rem + 1vw);
+  height: auto
+  width: auto;
+  text-align: center;
+  display: inline-flex; /* Ensures button behaves like a flex container */
+  justify-content: center; /* Horizontally centers text */
+  align-items: center; /* Vertically centers text */
+}
+.mainFont {
+  color: black;
+  font-size: calc(2rem + 3.50vw);
+  font-style: bold;
+  -webkit-text-stroke-color: white;
+}
+.mainFont2 {
+  color: black;
+  font-size: calc(0.75rem + 1vw);
+  -webkit-text-stroke-color: white;
+}

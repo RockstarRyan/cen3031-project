@@ -60,7 +60,7 @@ if ((isset($_POST['UserName'])) && (isset($_POST['UserPassword'])) && (isset($_P
         <div class="login-container">
             <h1>Sign Up</h1>
             <nav> 
-                <li><a href="login.php">Sign In</a></li> <!-- direct to login/sign up pages -->
+                <li><a href="login.php">Log In</a></li> <!-- direct to login/sign up pages -->
                 <li><a href="signup.php">Sign Up</a></li>
             </nav>
             <?php if (isset($GLOBALS['sign_up_error']) && $GLOBALS['sign_up_error']!==false) {

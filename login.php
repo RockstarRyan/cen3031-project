@@ -47,7 +47,7 @@ if ((isset($_POST['UserName'])) && (isset($_POST['UserPassword']))) {
         <div class="login-container">
             <h1>Log In</h1>
             <nav> 
-                <li><a href="login.php">Sign In</a></li> <!-- direct to login/sign up pages -->
+                <li><a href="login.php">Log In</a></li> <!-- direct to login/sign up pages -->
                 <li><a href="signup.php">Sign Up</a></li>
             </nav>
             <form method="post">
