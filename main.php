@@ -144,7 +144,7 @@ $user_meds = $db->query(
 												// FILL IN: Replace $med_id with actual medication ID
 												$med_id = 5;
 												$medication = $db->selectRowsCustom('medications','*',[['MedicationID',$med_id]])[0];
-												echo "<select name='MedicationID' disabled><option value='".(5)."' selected>".$medication[1].", ".$medication[2]."</option></select>";
+												echo "<select name='MedicationID' disabled><option value='".$medication[0]."' selected>".$medication[1].", ".$medication[2]."</option></select>";
 											?></div>
 										</div>
 										<div class="row mb-3">
