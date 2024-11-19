@@ -43,333 +43,117 @@ $user_meds = $db->query(
     <link rel="stylesheet" href="css/mainStyle.css">
 </head>
 <body>
-	<div class="container-fluid">
-	<!-- set up bootstrap grid system to make page format responsive -->
+ <header class="main-header py-3 shadow-sm">
 	<div class="row">
-		<div class="col-4 d-flex flex-column align-items-center">
-		</div>
-		<div class="col-7">
+		<div class="col-2 text-start ps-3">
+		<div class = "settings-icon mb-4 pb-3">
+			<a href="settings.php">
+				<img src="images/cog.png" alt="Settings" class="invert settings-icon top-0 end-0 m-3" style="width: 3vw; height: 3vw;">
+			</a>
+			</div>
+	    </div>
+		<div class="col-8 text-center">
 			<p class="mainFont2">Welcome, Partner!</p>
 		</div>
-		<div class="col-1">
-		<a href="settings.php">
-			<img src="images/cog.png" alt="Settings" class="settings-icon position-absolute top-0 end-0 m-3" style="width: 3vw; height: 3vw;">
-		</a>
-		<a href='logout.php'>Log Out</a>
-		</div>
-	</div>
-	<div class="container-fluid">
-	<!-- set up bootstrap grid system to make page format responsive -->
-	<div class="row flex-nowrap">
-		<div class="col-3 d-flex flex-column align-items-center">
-			<img src="images/PillPartner.png" alt="PillPartner Avatar" class="pill-partner text-start text m-3" style="width: 30vw; height: 30vw">
-			<!-- Button to Open Modal -->
-				<button type="button" class="btn btn-primary med-button " data-bs-toggle="modal" data-bs-target="#addModal">
-					Add New Perscription
-				</button>
+		<div class="col-2 text-end pe-3">
 			
+			<div class = "logout-button p-3">
+				<a href="logout.php" class="btn btn-outline-custom">Log Out</a>
+			</div>
 		</div>
-		<div class="col-8" style="background-color: lightblue; border-width: 5px; border-style: solid; border-color: white; border-radius: 10px; margin: 1rem; padding-right: 1rem;">
-			<p><strong>Logged in as:</strong> <?php echo $_SESSION['UserFirstName']." ".$_SESSION['UserLastName']. " (".$_SESSION['UserName'].")"; ?></p>
-			<table class="table table-bordered" style="width: 100%; ">
-			<thead class="thead-dark">
-			<colgroup>
-				<col style="width: 10%;">
-				<col style="width: 25%;">
-				<col style="width: 15%;">
-				<col style="width: 15%;">
-				<col style="width: 10%;">
-				<!--
-				<col style="width: 5%;">
-				-->
-
-			</colgroup>
-				<tr>
-				  <th scope="col">Picture</th>
-				  <th scope="col">Medication</th>
-				  <th scope="col">Dosage</th>
-				  <th scope="col">Notes</th>
-				  <th scope="col">Intakes</th>
-				  <!--
-				  <th scope="col">Edit</th>
-				  -->
-				</tr>
-			  </thead>
-			  <tbody>
-			  <?php
-                foreach ($user_meds as $med) {
-                    echo "<tr>";
-                    echo "<td><img src=\"images/medication_".$med["MedicationID"].".jpg\" alt=\"{$med['MedicationID']}\" class=\"pill1\" style=\"width: 10vw; height: 10vw;\"></td>";
-                    echo "<td class=\"text-nowrap\">{$med['MedicationName']}</td>";
-					echo "<td class=\"text-nowrap\">{$med['PrescriptionDosage']} {$med['PrescriptionUnit']}</td>";
-					echo "<td class=\"text-nowrap\">".$med["PrescriptionNotes"]."</td>";
-                    echo "<td class=\"text-center\"><button 
-					class=\"btn btn-link text-decoration-none\" 
-					style=\"padding: calc(0.50 rem + 0.05vw)\"
-					data-bs-toggle=\"modal\" 
-					data-bs-target=\"#intakeModal\"
-					data-medication=\"" . $med['MedicationName'] . "\"
-					data-dosage=\"" . $med['PrescriptionDosage'] . " " . $med['PrescriptionUnit'] . "\"
-					data-notes=\"Fill with notes\"
-					>Add Intake</button>
-						</td>";
-					echo "<!--<td class=\"text-center\"><button 
-					class=\"btn btn-link text-decoration-none\" 
-					style=\"padding: calc(1 rem + 0.05vw)\"
-					data-bs-toggle=\"modal\" 
-					data-bs-target=\"#editModal\"
-					data-medication=\"" . $med['MedicationName'] . "\"
-					data-dosage=\"" . $med['PrescriptionDosage'] . " " . $med['PrescriptionUnit'] . "\"
-					data-notes=\"Fill with notes\"
-					>...</button>
-						</td>-->";
-                    echo "</tr>";
-                }
-                ?>
-			  </tbody>
-			</table>
-		</div>
-		
 	</div>
-	<div class="row">
-		<div class="col-8 text-center" style="margin-top: auto;">
-		<!-- Edit Commented out
-			<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-				<div class="modal-dialog model-dialog-centered modal-xl">
-					<div class="modal-content">
-						<form>
-							<div class="modal-header">
-								<h1 class="modal-title" id="editModalLabel">Edit Medication</h2>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-								<div class="container-fluid">
-									<div class="row mb-3">
-										<div class="col-4 text-end">
-											<label style="font-size: 2vw;" for="UserName"><b>Medication name: </b></label>
+ </header>
+
+  <main class="container my-5 text-align-center">
+	<div class="container-fluid">
+		<div class="container-fluid">
+			<div class="row flex-nowrap">
+				<div class="col-3 d-flex flex-column align-items-center" style="padding-right: calc(8rem + 5vw);">
+					<img src="images/PillPartner.png" alt="PillPartner Avatar" class="pill-partner text-start text m-3" style="width: calc(25rem + 10vw); height: calc(25rem + 10vw);">
+					<!-- Button to Open Modal -->
+						<button type="button" class="btn btn-primary med-button" data-bs-toggle="modal" data-bs-target="#addModal">
+							Add New Perscription
+						</button>
+					
+				</div>
+				<div class="col-9 table-background pt-3 pe-4 ps-4 pb-2">
+					<p><strong>Logged in as:</strong> <?php echo $_SESSION['UserFirstName']." ".$_SESSION['UserLastName']. " (".$_SESSION['UserName'].")"; ?></p>
+
+					<table class="table table-bordered" style="width: 100%; ">
+					<thead class="thead-dark">
+					<colgroup>
+						<col style="width: 10%;">
+						<col style="width: 25%;">
+						<col style="width: 15%;">
+						<col style="width: 15%;">
+						<col style="width: 10%;">
+
+					</colgroup>
+						<tr>
+						  <th scope="col">Picture</th>
+						  <th scope="col">Medication</th>
+						  <th scope="col">Dosage</th>
+						  <th scope="col">Notes</th>
+						  <th scope="col">Intakes</th>
+						 
+						</tr>
+					  </thead>
+					  <tbody>
+					  <?php
+						foreach ($user_meds as $med) {
+							echo "<tr>";
+							echo "<td><img src=\"images/medication_".$med["MedicationID"].".jpg\" alt=\"{$med['MedicationID']}\" class=\"pill1\" style=\"width: 10vw; height: 10vw;\"></td>";
+							echo "<td class=\"text-nowrap\">{$med['MedicationName']}</td>";
+							echo "<td class=\"text-nowrap\">{$med['PrescriptionDosage']} {$med['PrescriptionUnit']}</td>";
+							echo "<td class=\"text-nowrap\">".$med["PrescriptionNotes"]."</td>";
+							echo "<td class=\"text-center\"><button 
+							class=\"btn btn-link text-decoration-none\" 
+							style=\"padding: calc(0.50 rem + 0.05vw)\"
+							data-bs-toggle=\"modal\" 
+							data-bs-target=\"#intakeModal\"
+							data-medication=\"" . $med['MedicationName'] . "\"
+							data-dosage=\"" . $med['PrescriptionDosage'] . " " . $med['PrescriptionUnit'] . "\"
+							data-notes=\"Fill with notes\"
+							>Add Intake</button>
+								</td>";
+							echo "</tr>";
+						}
+						?>
+					  </tbody>
+					</table>
+				</div>
+			</div>
+		<div class="row">
+			<div class="col-8 text-center" style="margin-top: auto;">
+				<div class="modal fade" id="intakeModal" tabindex="-1" aria-labelledby="intakeModalLabel" aria-hidden="true">
+					<div class="modal-dialog model-dialog-centered modal-xl">
+						<div class="modal-content">
+							<form>
+								<div class="modal-header">
+									<h1 class="modal-title" id="intakeModalLabel">Add Intake</h2>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="container-fluid">
+										<div class="row mb-3">
+											<div class="col-4 text-end">
+												<label style="font-size: calc(1rem + 1vw);" for="UserName"><b>Medication name: </b></label>
 											</div>
 											<div class="col-4 text-start">
-											<input type="text" class="form-control" id = "medicationName" name="medicationName" style="width: 10vw; height: 2vw; font-size: 1vw;" required></input>
-										</div>
-									</div>
-									<div class="row mb-3">
-										<div class="col-4 text-end">
-											<label style="font-size: 2vw;" for="UserName"><b>Medication dosage: </b></label>
-										</div>
-										<div class="col-8 d-flex flex-wrap" style="display: flex; gap: 10px;">
-											<label style="font-size: 1vw;"><b>Take </b></label>
-											<div class="form-group">
-												<input type="text" placeholder="Type..." name="medicationAmount" style="width: 4vw; height: 1.50vw; font-size: 1vw;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-												</div>
-												<div class="form-group">
-												<select class="dynamicDropdown" id="PrescriptionUnit" style="width: auto; font-size: 0.9vw;" onchange="resizeDropdown(this)" required>
-													<option value="" disabled selected>Select an amount</option>
-													<option value="1">mg</option>
-													<option value="2">ml</option>
-													<option value="3">capsules</option>
-													<option value="4">tablets</option>
-												</select>
+												<label style="font-size: 2vw;" for="UserName"><b>[TODO Populate Brand] </b></label>
+												<label style="font-size: 2vw;" for="UserName"><b>[TODO Populate Name]</b></label>
 											</div>
-											<label style="font-size: 1vw;" for="UserPassword"><b>per </b></label>
-											<div class="form-group">
-												<select class="dynamicDropdown" id="secondDropdown" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
-													<option value="" disabled selected>Select a frequency</option>
-													<option value="1">day</option>
-													<option value="2">week</option>
-													<option value="3">month</option>
-												</select>
-											</div>
-											<div class="form-group" id="DayDropDown" style="display: none; font-size: 0.9vw;" >
-												<label style="font-size: 1vw;"><b> on </b></label>
-												<select class="dynamicDropdown" id="thirdDropdownSelect" onchange="resizeDropdown(this)" required>
-													<option value="option1">Monday</option>
-													<option value="option2">Tuesday</option>
-													<option value="option2">Wednesday</option>
-													<option value="option1">Thursday</option>
-													<option value="option2">Friday</option>
-													<option value="option2">Saturday</option>
-													<option value="option2">Sunday</option>
-												</select>
-											</div>	
-											<label style="font-size: 1vw;"><b> at </b></label>
-											<input type="text" placeholder="Hr" name="hourValue" style="width: 2.50vw; height: 1.50vw; font-size: 1vw;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-											<label style="font-size: 1vw;"><b>:</b></label>
-											<input type="text" placeholder="Min" name="minuteValue" style="width: 2.50vw; height: 1.50vw; font-size: 1vw;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-											<div class="form-group">
-												<select class="dynamicDropdown" id="fourthDropdwon" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
-													<option value="1">AM</option>
-													<option value="2">PM</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="row mb-3">
-										<div class="col-4 text-end text-wrap">
-											<label style="font-size: 2vw;" for="UserPassword"><b>Image of medication:</b></label> 
-										</div>
-										<div class="col-4 text-start text-wrap">
-											<div class="form-group">
-												<label style="font-size: 1vw;" for="imageUpload">Select image to upload:</label>
-												<input type="file" class="form-control-file" id="imageUpload" style="font-size: .8vw;" accept="image/*">
-											</div>
-											<button type="button" class="btn btn-primary" style="font-size: 1vw">Upload</button>
-										</div>
-									</div>
-									<div class="row mb-3">
-										<div class="col-4 text-end text-wrap">
-											<label style="font-size: 2vw;" for="UserPassword"><b>Notes:</b></label>
-										</div>
-										<div class="col-4 text-wrap">
-											<input type="text" class="form-control" id = "medicationName" name="medicationName" style="width: 10vw; height: 2vw; font-size: 1vw;" required></input>
-										</div>
-									</div>	
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-								<button type="submit" class="btn btn-primary">Save Medication</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		-->
-			<div class="modal fade" id="intakeModal" tabindex="-1" aria-labelledby="intakeModalLabel" aria-hidden="true">
-				<div class="modal-dialog model-dialog-centered modal-xl">
-					<div class="modal-content">
-						<form>
-							<div class="modal-header">
-								<h1 class="modal-title" id="intakeModalLabel">Add Intake</h2>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-								<div class="container-fluid">
-									<div class="row mb-3">
-										<div class="col-4 text-end">
-											<label style="font-size: calc(1rem + 1vw);" for="UserName"><b>Medication name: </b></label>
-										</div>
-										<div class="col-4 text-start">
-											<label style="font-size: 2vw;" for="UserName"><b>[TODO Populate Brand] </b></label>
-											<label style="font-size: 2vw;" for="UserName"><b>[TODO Populate Name]</b></label>
-										</div>
-									</div>
-									<div class="row mb-3">
-										<div class="col-4 text-end">
-											<label style="font-size: calc(1rem + 1vw);" for="UserName"><b>Medication dosage: </b></label>
-										</div>
-										<div class="col-8 d-flex flex-wrap" style="display: flex; gap: 10px;">
-											<label style="font-size: calc(0.40rem + 0.60vw);"><b>Take </b></label>
-											<div class="form-group">
-												<input type="text" placeholder="Type..." name="medicationAmount" style="width:  calc(3rem + 0.60vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-												</div>
-												<div class="form-group">
-												<select class="dynamicDropdown" id="PrescriptionUnit" style="width: auto; font-size: calc(0.40rem + 0.60vw);" onchange="resizeDropdown(this)" required>
-													<option value="" disabled selected>Select an amount</option>
-													<option value="1">mg</option>
-													<option value="2">ml</option>
-													<option value="3">capsules</option>
-													<option value="4">tablets</option>
-												</select>
-											</div>
-											<label style="width: auto; font-size: calc(0.40rem + 0.60vw);" for="UserPassword"><b>per </b></label>
-											<div class="form-group">
-												<select class="dynamicDropdown" id="secondDropdown" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
-													<option value="" disabled selected>Select a frequency</option>
-													<option value="1">day</option>
-													<option value="2">week</option>
-													<option value="3">month</option>
-												</select>
-											</div>
-											<div class="form-group" id="DayDropDown" style="dispaly: none; width: auto; font-size: calc(0.40rem + 0.60vw);" >
-												<label style="font-size: 1vw;"><b> on </b></label>
-												<select class="dynamicDropdown" id="thirdDropdownSelect" onchange="resizeDropdown(this)">
-													<option value="option1">Monday</option>
-													<option value="option2">Tuesday</option>
-													<option value="option2">Wednesday</option>
-													<option value="option1">Thursday</option>
-													<option value="option2">Friday</option>
-													<option value="option2">Saturday</option>
-													<option value="option2">Sunday</option>
-												</select>
-											</div>	
-											<label style="font-size: 1vw;"><b> at </b></label>
-											<input type="text" placeholder="Hr" name="hourValue" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-											<label style="font-size: 1vw;"><b>:</b></label>
-											<input type="text" placeholder="Min" name="minuteValue" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-											<div class="form-group">
-												<select class="dynamicDropdown" id="fourthDropdwon" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
-													<option value="1">AM</option>
-													<option value="2">PM</option>
-												</select>
-											</div>
-										</div>
-									</div>
-				
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-								<button type="submit" class="btn btn-primary">Save Medication</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-			<!-- Add Med Modal Structure -->
-			<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-				<div class="modal-dialog model-dialog-centered modal-xl">
-					<div class="modal-content">
-						<form>
-							<div class="modal-header">
-								<h1 class="modal-title" id="addModalLabel">Add New Perscription</h2>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-								<div class="container-fluid">
-										<div class="row mb-3">
-											<div class="col-4 text-end">
-												<label style="font-size: calc(1rem + 1vw);" for="UserName"><b>Medication Details: </b></label>
-											</div>
-											<div class="col-8 text-start">
-												<div class="form-group" id="databaseMedication" style="display: block;">
-													<select class="dynamicDropdown" id="MedicationNameDatabase" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem;" onchange="resizeDropdown(this)" required>
-														<option value="" disabled selected>Select Medication Name...</option>
-														<option value="1">medname1</option>
-														<option value="2">medname2</option>
-														<option value="3">medname3</option>
-													</select>
-													<select class="dynamicDropdown" id="MedicationBrandDatabse" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem;" onchange="resizeDropdown(this)" required>
-														<option value="" disabled selected>Select Medication Brand...</option>
-														<option value="1">medname1</option>
-														<option value="2">medname2</option>
-														<option value="3">medname3</option>
-													</select>
-												</div>
-												
-												<div class="form-group" id="customMedication" style="display: none;">
-													<div class="form-group">
-															<input type="text" placeholder="Type Medication Name..." name="MedicationNameCustom" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-															<input type="text" placeholder="Type Medication Brand..." name="MedicationBrandCustom" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem; " oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-													</div>
-												</div>
-												<button type="button" class="btn btn-primary custom-button" id="medicationButton" onclick="toggleCustomMed()" style="font-size: 1rem;">
-														Custom Medication
-												</button>
-											
-											</div>
-				
 										</div>
 										<div class="row mb-3">
 											<div class="col-4 text-end">
-											<label style="font-size: calc(1rem + 1vw);" for="PerscirptionDosage"><b>Dosage: </b></label>
+												<label style="font-size: calc(1rem + 1vw);" for="UserName"><b>Medication dosage: </b></label>
 											</div>
 											<div class="col-8 d-flex flex-wrap" style="display: flex; gap: 10px;">
+												<label style="font-size: calc(0.40rem + 0.60vw);"><b>Take </b></label>
 												<div class="form-group">
-													<input type="text" placeholder="Type..." name="medicationAmount" style="width: auto; font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-												</div>
-												<div class="form-group">
+													<input type="text" placeholder="Type..." name="medicationAmount" style="width:  calc(3rem + 0.60vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+													</div>
+													<div class="form-group">
 													<select class="dynamicDropdown" id="PrescriptionUnit" style="width: auto; font-size: calc(0.40rem + 0.60vw);" onchange="resizeDropdown(this)" required>
 														<option value="" disabled selected>Select an amount</option>
 														<option value="1">mg</option>
@@ -378,8 +162,7 @@ $user_meds = $db->query(
 														<option value="4">tablets</option>
 													</select>
 												</div>
-												<!--
-												<label style="font-size: 1rem;"><b>per </b></label>
+												<label style="width: auto; font-size: calc(0.40rem + 0.60vw);" for="UserPassword"><b>per </b></label>
 												<div class="form-group">
 													<select class="dynamicDropdown" id="secondDropdown" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
 														<option value="" disabled selected>Select a frequency</option>
@@ -388,9 +171,9 @@ $user_meds = $db->query(
 														<option value="3">month</option>
 													</select>
 												</div>
-												<div class="form-group" id="DayDropDownContainer" style="font-size: 0.9vw;" >
-													<label style="font-size: 1rem;"><b> on </b></label>
-													<select class="dynamicDropdown" id="DayDropDown" style="display: none;" onchange="resizeDropdown(this)" required>
+												<div class="form-group" id="DayDropDown" style="dispaly: none; width: auto; font-size: calc(0.40rem + 0.60vw);" >
+													<label style="font-size: 1vw;"><b> on </b></label>
+													<select class="dynamicDropdown" id="thirdDropdownSelect" onchange="resizeDropdown(this)">
 														<option value="option1">Monday</option>
 														<option value="option2">Tuesday</option>
 														<option value="option2">Wednesday</option>
@@ -400,61 +183,173 @@ $user_meds = $db->query(
 														<option value="option2">Sunday</option>
 													</select>
 												</div>	
-												<label style="font-size: 1rem;"><b> at </b></label>
-												<input type="text" style="width: 2.50vw; height: 1.50vw; font-size: 1vw; color: black;" placeholder="Hr" name="hourValue"  oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-												<label style="font-size: 1rem;"><b>:</b></label>
-												<input type="text" placeholder="Min" name="minuteValue" style="width: 2.50vw; height: 1.50vw; font-size: 1vw;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+												<label style="font-size: 1vw;"><b> at </b></label>
+												<input type="text" placeholder="Hr" name="hourValue" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+												<label style="font-size: 1vw;"><b>:</b></label>
+												<input type="text" placeholder="Min" name="minuteValue" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
 												<div class="form-group">
-													<select class="dynamicDropdown" id="fourthDropdwon" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
+													<select class="dynamicDropdown" id="fourthDropdwon" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
 														<option value="1">AM</option>
 														<option value="2">PM</option>
 													</select>
 												</div>
-												-->
 											</div>
 										</div>
-										<!--
-										<div class="row mb-3">
-											<div class="col-4 text-end text-wrap">
-												<label style="font-size: 2rem;" for="UserPassword"><b>Image of medication:</b></label> 
-											</div>
-											<div class="col-4 text-start text-wrap">
-												<div class="form-group">
-													<label style="font-size: 1rem;" for="imageUpload">Select image to upload:</label>
-													<input type="file" class="form-control-file" id="imageUpload" style="font-size: .8vw;" accept="image/*">
-												</div>
-												<button type="button" class="btn btn-primary" style="font-size: 1vw">Upload</button>
-											</div>
-										</div>
-										-->
-										<div class="row mb-3">
-											<div class="col-4 text-end text-wrap">
-												<label style="font-size: calc(1rem + 1vw);" for="UserPassword"><b>Notes:</b></label><br>
-												<label style="font-size: calc(0.50rem + 0.50vw);" for="UserPassword"><b>(optional)</b></label>
-											</div>
-											<div class="col-4 text-wrap">
-												<input type="text" placeholder="Type here..." name="UserPassword" style="width: calc(20rem + 10vw); height: calc(5rem + 2vw); font-size: calc(0.40rem + 0.60vw); padding-top: 0.5vw;" ></input>	
-											</div>
-										</div>	
+					
 									</div>
 								</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-								<button type="submit" class="btn btn-primary">Save Medication</button>
-							</div>
-						</form>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									<button type="submit" class="btn btn-primary">Save Medication</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+				<!-- Add Med Modal Structure -->
+				<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+					<div class="modal-dialog model-dialog-centered modal-xl">
+						<div class="modal-content">
+							<form>
+								<div class="modal-header">
+									<h1 class="modal-title" id="addModalLabel">Add New Perscription</h2>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<div class="container-fluid">
+											<div class="row mb-3">
+												<div class="col-4 text-end">
+													<label style="font-size: calc(1rem + 1vw);" for="UserName"><b>Medication Details: </b></label>
+												</div>
+												<div class="col-8 text-start">
+													<div class="form-group" id="databaseMedication" style="display: block;">
+														<select class="dynamicDropdown" id="MedicationNameDatabase" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem;" onchange="resizeDropdown(this)" required>
+															<option value="" disabled selected>Select Medication Name...</option>
+															<option value="1">medname1</option>
+															<option value="2">medname2</option>
+															<option value="3">medname3</option>
+														</select>
+														<select class="dynamicDropdown" id="MedicationBrandDatabse" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem;" onchange="resizeDropdown(this)" required>
+															<option value="" disabled selected>Select Medication Brand...</option>
+															<option value="1">medname1</option>
+															<option value="2">medname2</option>
+															<option value="3">medname3</option>
+														</select>
+													</div>
+													
+													<div class="form-group" id="customMedication" style="display: none;">
+														<div class="form-group">
+																<input type="text" placeholder="Type Medication Name..." name="MedicationNameCustom" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+																<input type="text" placeholder="Type Medication Brand..." name="MedicationBrandCustom" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem; " oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+														</div>
+													</div>
+													<button type="button" class="btn btn-primary custom-button" id="medicationButton" onclick="toggleCustomMed()" style="font-size: 1rem;">
+															Custom Medication
+													</button>
+												
+												</div>
+					
+											</div>
+											<div class="row mb-3">
+												<div class="col-4 text-end">
+												<label style="font-size: calc(1rem + 1vw);" for="PerscirptionDosage"><b>Dosage: </b></label>
+												</div>
+												<div class="col-8 d-flex flex-wrap" style="display: flex; gap: 10px;">
+													<div class="form-group">
+														<input type="text" placeholder="Type..." name="medicationAmount" style="width: auto; font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+													</div>
+													<div class="form-group">
+														<select class="dynamicDropdown" id="PrescriptionUnit" style="width: auto; font-size: calc(0.40rem + 0.60vw);" onchange="resizeDropdown(this)" required>
+															<option value="" disabled selected>Select an amount</option>
+															<option value="1">mg</option>
+															<option value="2">ml</option>
+															<option value="3">capsules</option>
+															<option value="4">tablets</option>
+														</select>
+													</div>
+													<!--
+													<label style="font-size: 1rem;"><b>per </b></label>
+													<div class="form-group">
+														<select class="dynamicDropdown" id="secondDropdown" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
+															<option value="" disabled selected>Select a frequency</option>
+															<option value="1">day</option>
+															<option value="2">week</option>
+															<option value="3">month</option>
+														</select>
+													</div>
+													<div class="form-group" id="DayDropDownContainer" style="font-size: 0.9vw;" >
+														<label style="font-size: 1rem;"><b> on </b></label>
+														<select class="dynamicDropdown" id="DayDropDown" style="display: none;" onchange="resizeDropdown(this)" required>
+															<option value="option1">Monday</option>
+															<option value="option2">Tuesday</option>
+															<option value="option2">Wednesday</option>
+															<option value="option1">Thursday</option>
+															<option value="option2">Friday</option>
+															<option value="option2">Saturday</option>
+															<option value="option2">Sunday</option>
+														</select>
+													</div>	
+													<label style="font-size: 1rem;"><b> at </b></label>
+													<input type="text" style="width: 2.50vw; height: 1.50vw; font-size: 1vw; color: black;" placeholder="Hr" name="hourValue"  oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+													<label style="font-size: 1rem;"><b>:</b></label>
+													<input type="text" placeholder="Min" name="minuteValue" style="width: 2.50vw; height: 1.50vw; font-size: 1vw;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+													<div class="form-group">
+														<select class="dynamicDropdown" id="fourthDropdwon" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
+															<option value="1">AM</option>
+															<option value="2">PM</option>
+														</select>
+													</div>
+													-->
+												</div>
+											</div>
+											<!--
+											<div class="row mb-3">
+												<div class="col-4 text-end text-wrap">
+													<label style="font-size: 2rem;" for="UserPassword"><b>Image of medication:</b></label> 
+												</div>
+												<div class="col-4 text-start text-wrap">
+													<div class="form-group">
+														<label style="font-size: 1rem;" for="imageUpload">Select image to upload:</label>
+														<input type="file" class="form-control-file" id="imageUpload" style="font-size: .8vw;" accept="image/*">
+													</div>
+													<button type="button" class="btn btn-primary" style="font-size: 1vw">Upload</button>
+												</div>
+											</div>
+											-->
+											<div class="row mb-3">
+												<div class="col-4 text-end text-wrap">
+													<label style="font-size: calc(1rem + 1vw);" ><b>Notes:</b></label><br>
+													<label style="font-size: calc(0.50rem + 0.50vw);" ><b>(optional)</b></label>
+												</div>
+												<div class="col-4 text-wrap">
+													<input type="text" placeholder="Type here..." name="PrescriptionNotes" style="width: calc(22rem + 5vw); height: calc(5rem + 2vw); font-size: calc(0.40rem + 0.60vw); padding-top: 0.5vw;" ></input>	
+												</div>
+											</div>	
+										</div>
+									</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									<button type="submit" class="btn btn-primary">Save Medication</button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 		<div class="col-7">
-		  
-			
 		</div>
-		
-		
 	</div>
+  </main>
+
+  <footer class="main-footer text-white py-3 mt-5">
+    <div class="container text-center">
+      <p class="mb-0">CEN3031 Project by Team Small Pharma</p>
+    </div>
+  </footer>
+
+	
 </div>
 
 
