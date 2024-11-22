@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //Instantiating for potential changing depending on whether or not it is a custom medication
     $MedicationID = 0;
     $isCustom = false;
-    
+
     // References prescription count in order to allow new prescriptions to fill the next available id spot
     $table_name = "prescriptions";
     $sql1 = "SELECT COUNT(*) AS pID_count FROM $table_name";
@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['MedicationNameCustom']) && isset($_POST['MedicationBrandCustom'])){
             $isCustom = true;
             $MedicationID = $mID_count + 2;
-            $MedicationBrand = $_POST['MedicationNameCustom'];
-            $MedicationName = $_POST['MedicationBrandCustom'];
+            $MedicationBrand = $_POST['MedicationBrandCustom'];
+            $MedicationName = $_POST['MedicationNameCustom'];
 
             $insertion = $db->prepare("INSERT INTO medications (MedicationID, MedicationBrand, MedicationName) VALUES (?, ?, ?)");
             $insertion->bind_param("iss", $MedicationID, $MedicationBrand, $MedicationName);
