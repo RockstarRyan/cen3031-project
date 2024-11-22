@@ -7,6 +7,8 @@ if ((!isset($_SESSION['UserName'])) || (!isset($_SESSION['UserPassword']))) {
 	redirect('login.php');
 }
 
+//Variable added for telling whether a custom medication is being added
+$CustomMed = false;
 
 //prints only a specific users medications, implement after adding prescriptions to users
 $user_id = (int)$_SESSION['UserID'];
@@ -157,12 +159,12 @@ $user_meds = $db->query(
 													<input type="text" placeholder="Type..." name="medicationAmount" style="width:  calc(3rem + 0.60vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
 													</div>
 													<div class="form-group">
-													<select class="dynamicDropdown" id="PrescriptionUnit" style="width: auto; font-size: calc(0.40rem + 0.60vw);" onchange="resizeDropdown(this)" required>
+													<select class="dynamicDropdown" id="PrescriptionUnit" name="PrescriptionUnit" style="width: auto; font-size: calc(0.40rem + 0.60vw);" onchange="resizeDropdown(this)" required>
 														<option value="" disabled selected>Select an amount</option>
-														<option value="1">mg</option>
-														<option value="2">ml</option>
-														<option value="3">capsules</option>
-														<option value="4">tablets</option>
+														<option value="mg">mg</option>
+														<option value="ml">ml</option>
+														<option value="capsules">capsules</option>
+														<option value="tablets">tablets</option>
 													</select>
 												</div>
 												<label style="width: auto; font-size: calc(0.40rem + 0.60vw);" for="UserPassword"><b>per </b></label>
@@ -214,7 +216,7 @@ $user_meds = $db->query(
 				<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
 					<div class="modal-dialog model-dialog-centered modal-xl">
 						<div class="modal-content">
-							<form>
+							<form id="saveMed" method="post" action="dbInsert.php">
 								<div class="modal-header">
 									<h1 class="modal-title" id="addModalLabel">Add New Perscription</h2>
 									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -258,12 +260,12 @@ $user_meds = $db->query(
 														<input type="text" placeholder="Type..." name="medicationAmount" style="width: auto; font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
 													</div>
 													<div class="form-group">
-														<select class="dynamicDropdown" id="PrescriptionUnit" style="width: auto; font-size: calc(0.40rem + 0.60vw);" onchange="resizeDropdown(this)" required>
+														<select class="dynamicDropdown" id="PrescriptionUnit" name="PrescriptionUnit" style="width: auto; font-size: calc(0.40rem + 0.60vw);" onchange="resizeDropdown(this)" required>
 															<option value="" disabled selected>Select an amount</option>
-															<option value="1">mg</option>
-															<option value="2">ml</option>
-															<option value="3">capsules</option>
-															<option value="4">tablets</option>
+															<option value="mg">mg</option>
+															<option value="ml">ml</option>
+															<option value="capsules">capsules</option>
+															<option value="tablets">tablets</option>
 														</select>
 													</div>
 													<!--
@@ -328,7 +330,7 @@ $user_meds = $db->query(
 									</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-primary">Save Medication</button>
+									<button type="submit" class="btn btn-primary" onclick="document.getElementById('saveMed').submit()">Save Medication</button>
 								</div>
 							</form>
 						</div>
