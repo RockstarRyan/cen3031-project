@@ -7,8 +7,6 @@ if ((!isset($_SESSION['UserName'])) || (!isset($_SESSION['UserPassword']))) {
 	redirect('login.php');
 }
 
-//Variable added for telling whether a custom medication is being added
-$CustomMed = false;
 
 //prints only a specific users medications, implement after adding prescriptions to users
 $user_id = (int)$_SESSION['UserID'];
@@ -169,7 +167,7 @@ $user_meds = $db->query(
 												</div>
 												<label style="width: auto; font-size: calc(0.40rem + 0.60vw);" for="UserPassword"><b>per </b></label>
 												<div class="form-group">
-													<select class="dynamicDropdown" id="secondDropdown" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
+													<select class="dynamicDropdown" id="secondDropdown" name="timeframe" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
 														<option value="" disabled selected>Select a frequency</option>
 														<option value="1">day</option>
 														<option value="2">week</option>
@@ -178,14 +176,14 @@ $user_meds = $db->query(
 												</div>
 												<div class="form-group" id="DayDropDown" style="dispaly: none; width: auto; font-size: calc(0.40rem + 0.60vw);" >
 													<label style="font-size: 1vw;"><b> on </b></label>
-													<select class="dynamicDropdown" id="thirdDropdownSelect" onchange="resizeDropdown(this)">
-														<option value="option1">Monday</option>
-														<option value="option2">Tuesday</option>
-														<option value="option2">Wednesday</option>
-														<option value="option1">Thursday</option>
-														<option value="option2">Friday</option>
-														<option value="option2">Saturday</option>
-														<option value="option2">Sunday</option>
+													<select class="dynamicDropdown" id="thirdDropdownSelect" name="weekday" onchange="resizeDropdown(this)">
+														<option value="M">Monday</option>
+														<option value="T">Tuesday</option>
+														<option value="W">Wednesday</option>
+														<option value="R">Thursday</option>
+														<option value="F">Friday</option>
+														<option value="Sat">Saturday</option>
+														<option value="S">Sunday</option>
 													</select>
 												</div>	
 												<label style="font-size: 1vw;"><b> at </b></label>
@@ -193,9 +191,9 @@ $user_meds = $db->query(
 												<label style="font-size: 1vw;"><b>:</b></label>
 												<input type="text" placeholder="Min" name="minuteValue" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
 												<div class="form-group">
-													<select class="dynamicDropdown" id="fourthDropdwon" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
-														<option value="1">AM</option>
-														<option value="2">PM</option>
+													<select class="dynamicDropdown" id="fourthDropdwon" name="ampm" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
+														<option value="AM">AM</option>
+														<option value="PM">PM</option>
 													</select>
 												</div>
 											</div>

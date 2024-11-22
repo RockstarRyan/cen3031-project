@@ -90,29 +90,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //Insertion queries for Add intake
 
 
-// $IntakeID = $iID_count + 2;
-// $PrescriptionID = REFERENCE THE ROW THE INTAKE IS BEING ADDED TO;
-// $IntakeTime = INSERT FROM USER INPUT;
+$IntakeID = $iID_count + 2;
+$PrescriptionID = REFERENCE THE ROW THE INTAKE IS BEING ADDED TO;
+$IntakeTime = "deafault text here";
+
+// defining variables for IntakeTime text construction
+$hourValue = $_POST['hourValue'];
+$minuteValue = $_POST['minuteValue'];
+$ampm = $_POST['ampm'];
+
+if($_POST['timeframe'] == "1"){
+    $IntakeTime = "Everyday at {$hourvalue}:{$minutevalue} $ampm";
+}
+if($_POST['timeframe'] == "2"){
+    $weekday = $_POST['weekday'];
+    $IntakeTime = "$weekday at {$hourvalue}:{$minutevalue} $ampm";
+}
+if($_POST['timeframe'] == "2"){
+    $IntakeTime = "Every month at {$hourvalue}:{$minutevalue} $ampm";
+}
 
 
-// $insertion = $db->prepare("INSERT INTO intakes (IntakeID, PrescriptionID, IntakeTime) VALUES (?, ?, ?)");
-// $insertion->bind_param("iis", $IntakeID, $PrescriptionID, $IntakeTime);
+$insertion = $db->prepare("INSERT INTO intakes (IntakeID, PrescriptionID, IntakeTime) VALUES (?, ?, ?)");
+$insertion->bind_param("iis", $IntakeID, $PrescriptionID, $IntakeTime);
 
-// // Execute the statement
-// if ($insertion->execute()) {
-//     echo "New record added successfully";
-// } else {
-//     echo "Error: " . $insertion->error;
-// }
+// Execute the statement
+if ($insertion->execute()) {
+    $yay = 'yay';
+} else {
+    echo "Error: " . $insertion->error;
+}
 
-// // Close the statement and connection
-// $insertion->close();
+// Close the statement and connection
+$insertion->close();
 
 
 
-//Refresh command to update table for user viewing
 
-//header("Refresh: 0");
 
 
 //Prints out all values of a particular table
