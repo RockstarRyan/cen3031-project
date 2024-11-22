@@ -80,48 +80,62 @@ $user_meds = $db->query(
 
 					<h2>Your Medications:</h2>
 
-					<table class="table table-bordered" style="width: 100%; ">
-					<thead class="thead-dark">
-					<colgroup>
-						<col style="width: 10%;">
-						<col style="width: 25%;">
-						<col style="width: 15%;">
-						<col style="width: 15%;">
-						<col style="width: 10%;">
-
-					</colgroup>
-						<tr>
-						  <th scope="col">Picture</th>
-						  <th scope="col">Medication Name</th>
-						  <th scope="col">Dosage</th>
-						  <th scope="col">Notes</th>
-						  <th scope="col">Intakes</th>
-						 
-						</tr>
-					  </thead>
-					  <tbody>
-					  <?php
-						foreach ($user_meds as $med) {
-							echo "<tr>";
-							echo "<td><img src=\"images/medication_".$med["MedicationID"].".jpg\" alt=\"{$med['MedicationID']}\" class=\"pill1\" style=\"width: 10vw; height: 10vw;\"></td>";
-							echo "<td class=\"text-nowrap\">{$med['MedicationName']}</td>";
-							echo "<td class=\"text-nowrap\">{$med['PrescriptionDosage']} {$med['PrescriptionUnit']}</td>";
-							echo "<td class=\"text-nowrap\">".$med["PrescriptionNotes"]."</td>";
-							echo "<td class=\"text-center\"><button 
-							class=\"btn btn-link text-decoration-none\" 
-							style=\"padding: calc(0.50 rem + 0.05vw)\"
-							data-bs-toggle=\"modal\" 
-							data-bs-target=\"#intakeModal\"
-							data-medication=\"" . $med['MedicationID'] . "\"
-							data-dosage=\"" . $med['PrescriptionDosage'] . " " . $med['PrescriptionUnit'] . "\"
-							data-notes=\"Fill with notes\"
-							>Add Intake</button>
-								</td>";
-							echo "</tr>";
-						}
-						?>
-					  </tbody>
-					</table>
+					<div class="table-responsive">
+						<table class="table table-bordered" style="width: 100%; font-size: calc(0.5rem + 0.35vw);">
+							<thead class="thead-dark">
+								<colgroup>
+									<col style="width: 10%;">
+									<col style="width: 15%;">
+									<col style="width: 5%;">
+									<col style="width: 15%;">
+									<col style="width: 10%;">
+									<col style="width: 5%;">
+								</colgroup>
+								<tr>
+									<th scope="col">Picture</th>
+									<th scope="col">Medication Name</th>
+									<th scope="col">Dosage</th>
+									<th scope="col">Notes</th>
+									<th scope="col">Intakes</th>
+									<th scope="col">Delete</th>
+								</tr>
+							 </thead>
+							  <tbody>
+							  <?php
+								foreach ($user_meds as $med) {
+									echo "<tr>";
+									echo "<td><img src=\"images/medication_".$med["MedicationID"].".jpg\" alt=\"{$med['MedicationID']}\" class=\"pill1\" style=\"width: 10vw; height: 10vw;\"></td>";
+									echo "<td class=\"text-wrap\">{$med['MedicationName']}</td>";
+									echo "<td class=\"text-wrap\">{$med['PrescriptionDosage']} {$med['PrescriptionUnit']}</td>";
+									echo "<td class=\"text-wrap\">".$med["PrescriptionNotes"]."</td>";
+									echo "<td class=\"text-wrap\">
+									<div class=\"text-center\">
+									<button class=\"btn btn-custom\"
+									data-bs-toggle=\"modal\" 
+									data-bs-target=\"#intakeModal\"
+									data-medication=\"" . $med['MedicationBrand'] . ", " . $med['MedicationName'] . "\"
+									>Add Intake</button>
+									</div>
+									<!-- the lines under this before <\td> is the temp for intake format + delete button for each, needs to be in a for loop per intake, user_meds needs to populate intake data so that IntakeTime can be used-->
+									<!-- replace the div here with the for loop logic, it is just keeping the format for now-->
+									<div>
+										<label class=\"text-wrap d-inline\">Take [PrescriptionDosage] per [IntakeTime]</label>
+										<button class=\"btn btn-delete d-inline\" data-intake-id=\"deleteIntake\" onclick=\"deleteIntake(this)\">
+											<img src=\"images/xmark.png\" alt=\"Delete\" style=\"width: 12px; height: 12px;\">
+										</button> 
+									</div>
+										</td>";
+									echo"<td style=\" text-align: center; vertical-align: middle;\">
+									<button class=\"btn btn-delete\" data-intake-id=\"deleteMedication\" onclick=\"deleteMedication(this)\">
+										<img src=\"images/xmark.png\" alt=\"Delete\" style=\"width: 24px; height: 24px;\">
+									</button> 
+										</td>";
+									echo "</tr>";
+								}
+								?>
+							  </tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		<div class="row">
@@ -140,12 +154,9 @@ $user_meds = $db->query(
 											<div class="col-4 text-end">
 												<label style="font-size: calc(1rem + 1vw);" for="MedicationID"><b>Medication:</b></label>
 											</div>
-											<div class="col-4 text-start"><?php
-												// FILL IN: Replace $med_id with actual medication ID
-												$med_id = 5;
-												$medication = $db->selectRowsCustom('medications','*',[['MedicationID',$med_id]])[0];
-												echo "<select name='MedicationID' disabled><option value='".$medication[0]."' selected>".$medication[1].", ".$medication[2]."</option></select>";
-											?></div>
+											<div class="col-4 text-start d-flex flex-column justify-content-center align-items-start">
+												<input type="text" class="form-control" id = "medicationName" name="medicationName" style="font-size: calc(0.40rem + 0.60vw);" disabled></input>
+												</div>
 										</div>
 										<div class="row mb-3">
 											<div class="col-4 text-end">
@@ -174,7 +185,7 @@ $user_meds = $db->query(
 														<option value="3">month</option>
 													</select>
 												</div>
-												<div class="form-group" id="DayDropDown" style="dispaly: none; width: auto; font-size: calc(0.40rem + 0.60vw);" >
+												<div class="form-group" id="DayDropDown" style="display: none; width: auto; font-size: calc(0.40rem + 0.60vw);" >
 													<label style="font-size: 1vw;"><b> on </b></label>
 													<select class="dynamicDropdown" id="thirdDropdownSelect" name="weekday" onchange="resizeDropdown(this)">
 														<option value="M">Monday</option>
@@ -203,7 +214,7 @@ $user_meds = $db->query(
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-primary">Save Medication</button>
+									<button type="submit" class="btn btn-primary">Save Intake</button>
 								</div>
 							</form>
 						</div>
@@ -328,7 +339,7 @@ $user_meds = $db->query(
 									</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-primary" onclick="document.getElementById('saveMed').submit()">Save Medication</button>
+									<button type="submit" class="btn btn-primary" onclick="document.getElementById('saveMed').submit()">Save Perscription</button>
 								</div>
 							</form>
 						</div>
@@ -431,17 +442,14 @@ $user_meds = $db->query(
 		}
 	</script>
 	<script>
-    const editModal = document.getElementById('editModal');
-    editModal.addEventListener('show.bs.modal', function (event) {
+	const intakeModal = document.getElementById('intakeModal');
+    intakeModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget; // Button that triggered the modal
         const medication = button.getAttribute('data-medication');
-        const dosage = button.getAttribute('data-dosage');
-        const notes = button.getAttribute('data-notes');
         
         // Populate the modal fields
         document.getElementById('medicationName').value = medication;
-        document.getElementById('dosage').value = dosage;
-        document.getElementById('notes').value = notes;
+		medicationInput.style.width = (medicationInput.value.length + 1) + 'ch';
     });
 
     const addModal = document.getElementById('addModal');
@@ -453,5 +461,6 @@ $user_meds = $db->query(
         customMedicationButton.addEventListener("click", toggleCustomMed);
     });
 </script>
+
 </body>
 </html>

@@ -83,6 +83,18 @@ main {
   height: auto;
   width: auto;
 }
+table .btn-custom{
+  color: white; /* Text color */
+  background-color: rgb(31, 199, 221); /* Border color */
+  border-color: white; /* Border color */
+  font-weight: bold;
+  font-size: calc(0.5rem + 0.35vw);
+  width: auto;
+  height: auto;
+}
+.btn-delete{
+	padding: 1px;
+}
 .custom-button{
 	font-size: 0.50vw;
 	padding: 0.30rem 1rem;
@@ -104,18 +116,6 @@ main {
     transform-origin: top left;
 }
 
-@media (max-width: 800px) {
-	.col-scaled {
-	  transform: scale(3) translate(+10%, +0%); 
-	  transform-origin: top left;
-	}
-}
-@media (min-width: 1250px) {
-	.col-scaled {
-	  transform: scale(6) translate(+4.50%, +0%); 
-	  transform-origin: top left;
-	}
-}
 .col-custom {
     display: flex;
     justify-content: center; 
