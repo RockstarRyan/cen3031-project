@@ -83,7 +83,7 @@ main {
   height: auto;
   width: auto;
 }
-table .btn-custom{
+.btn-custom{
   color: white; /* Text color */
   background-color: rgb(31, 199, 221); /* Border color */
   border-color: white; /* Border color */
