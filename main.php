@@ -180,9 +180,9 @@ $user_meds = $db->query(
 												<div class="form-group">
 													<select class="dynamicDropdown" id="secondDropdown" name="timeframe" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
 														<option value="" disabled selected>Select a frequency</option>
-														<option value="1">day</option>
-														<option value="2">week</option>
-														<option value="3">month</option>
+														<option value="day">day</option>
+														<option value="week">week</option>
+														<option value="month">month</option>
 													</select>
 												</div>
 												<div class="form-group" id="DayDropDown" style="display: none; width: auto; font-size: calc(0.40rem + 0.60vw);" >
@@ -197,6 +197,19 @@ $user_meds = $db->query(
 														<option value="S">Sunday</option>
 													</select>
 												</div>	
+												<div class="form-group" id="MonthDropDown" style="display: none; width: auto; font-size: calc(0.40rem + 0.60vw);" >
+													<label style="font-size: 1vw;"><b> on </b></label>
+													<select class="dynamicDropdown" id="fourthDropdownSelect" name="monthDay" onchange="resizeDropdown(this)">
+														<option value="M">Monday</option>
+														<option value="T">Tuesday</option>
+														<option value="W">Wednesday</option>
+														<option value="R">Thursday</option>
+														<option value="F">Friday</option>
+														<option value="Sat">Saturday</option>
+														<option value="S">Sunday</option>
+													</select>
+												</div>	
+												
 												<label style="font-size: 1vw;"><b> at </b></label>
 												<input type="text" placeholder="Hr" name="hourValue" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
 												<label style="font-size: 1vw;"><b>:</b></label>
@@ -246,7 +259,6 @@ $user_meds = $db->query(
 															}?>
 														</select>
 													</div>
-													
 													<div class="form-group" id="customMedication" style="display: none;">
 														<div class="form-group">
 																<input type="text" placeholder="Type Medication Name..." name="MedicationNameCustom" style="width: auto; font-size: calc(0.40rem + 0.60vw); margin: 0.20rem;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
@@ -256,9 +268,7 @@ $user_meds = $db->query(
 													<button type="button" class="btn btn-primary custom-button" id="medicationButton" onclick="toggleCustomMed()" style="font-size: 1rem;">
 															Custom Medication
 													</button>
-												
 												</div>
-					
 											</div>
 											<div class="row mb-3">
 												<div class="col-4 text-end">
@@ -277,55 +287,9 @@ $user_meds = $db->query(
 															<option value="tablets">tablets</option>
 														</select>
 													</div>
-													<!--
-													<label style="font-size: 1rem;"><b>per </b></label>
-													<div class="form-group">
-														<select class="dynamicDropdown" id="secondDropdown" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
-															<option value="" disabled selected>Select a frequency</option>
-															<option value="1">day</option>
-															<option value="2">week</option>
-															<option value="3">month</option>
-														</select>
-													</div>
-													<div class="form-group" id="DayDropDownContainer" style="font-size: 0.9vw;" >
-														<label style="font-size: 1rem;"><b> on </b></label>
-														<select class="dynamicDropdown" id="DayDropDown" style="display: none;" onchange="resizeDropdown(this)" required>
-															<option value="option1">Monday</option>
-															<option value="option2">Tuesday</option>
-															<option value="option2">Wednesday</option>
-															<option value="option1">Thursday</option>
-															<option value="option2">Friday</option>
-															<option value="option2">Saturday</option>
-															<option value="option2">Sunday</option>
-														</select>
-													</div>	
-													<label style="font-size: 1rem;"><b> at </b></label>
-													<input type="text" style="width: 2.50vw; height: 1.50vw; font-size: 1vw; color: black;" placeholder="Hr" name="hourValue"  oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-													<label style="font-size: 1rem;"><b>:</b></label>
-													<input type="text" placeholder="Min" name="minuteValue" style="width: 2.50vw; height: 1.50vw; font-size: 1vw;" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
-													<div class="form-group">
-														<select class="dynamicDropdown" id="fourthDropdwon" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
-															<option value="1">AM</option>
-															<option value="2">PM</option>
-														</select>
-													</div>
-													-->
+												
 												</div>
 											</div>
-											<!--
-											<div class="row mb-3">
-												<div class="col-4 text-end text-wrap">
-													<label style="font-size: 2rem;" for="UserPassword"><b>Image of medication:</b></label> 
-												</div>
-												<div class="col-4 text-start text-wrap">
-													<div class="form-group">
-														<label style="font-size: 1rem;" for="imageUpload">Select image to upload:</label>
-														<input type="file" class="form-control-file" id="imageUpload" style="font-size: .8vw;" accept="image/*">
-													</div>
-													<button type="button" class="btn btn-primary" style="font-size: 1vw">Upload</button>
-												</div>
-											</div>
-											-->
 											<div class="row mb-3">
 												<div class="col-4 text-end text-wrap">
 													<label style="font-size: calc(1rem + 1vw);" ><b>Notes:</b></label><br>
@@ -367,18 +331,27 @@ $user_meds = $db->query(
 	<!-- Custom JavaScript -->
     <!--script src="js/scripts.js"></script-->
 	<script> 
-	function toggleThirdDropdown() {
+	function toggleDropdowns() {
 		var secondDropdown = document.getElementById("secondDropdown");
 		var DayDropDown = document.getElementById("DayDropDown");
+		var MonthDropDown = document.getElementById("MonthDropDown");
+
 		
 		// Show second dropdown if the specific option is selected
-		if (secondDropdown.value == "2") {
+		if (secondDropdown.value == "week") {
 			DayDropDown.style.display = "block";
+			MonthDropDown.style.display = "none";
+		} else if (secondDropdown.value == "month") {
+			DayDropDown.style.display = "none";
+			MonthDropDown.style.display = "block";
 		} else {
 			DayDropDown.style.display = "none";
+			MonthDropDown.style.display = "none";
+
 		}
 	}
 	</script>
+	
 	<script>
 		function toggleCustomMed() {
 			var dropdown = document.getElementById("databaseMedication");
