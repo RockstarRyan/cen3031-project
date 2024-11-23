@@ -180,9 +180,9 @@ $user_meds = $db->query(
 												<div class="form-group">
 													<select class="dynamicDropdown" id="secondDropdown" name="timeframe" style="width: auto; font-size: 0.9vw;"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
 														<option value="" disabled selected>Select a frequency</option>
-														<option value="day">day</option>
-														<option value="week">week</option>
-														<option value="month">month</option>
+														<option value="1">day</option>
+														<option value="2">week</option>
+														<option value="3">month</option>
 													</select>
 												</div>
 												<div class="form-group" id="DayDropDown" style="display: none; width: auto; font-size: calc(0.40rem + 0.60vw);" >
@@ -198,24 +198,34 @@ $user_meds = $db->query(
 													</select>
 												</div>	
 												<div class="form-group" id="MonthDropDown" style="display: none; width: auto; font-size: calc(0.40rem + 0.60vw);" >
-													<label style="font-size: 1vw;"><b> on </b></label>
+													<label style="font-size: 1vw;"><b> on the </b></label>
 													<select class="dynamicDropdown" id="fourthDropdownSelect" name="monthDay" onchange="resizeDropdown(this)">
-														<option value="M">Monday</option>
-														<option value="T">Tuesday</option>
-														<option value="W">Wednesday</option>
-														<option value="R">Thursday</option>
-														<option value="F">Friday</option>
-														<option value="Sat">Saturday</option>
-														<option value="S">Sunday</option>
+														<?php
+															for ($i = 1; $i <= 31; $i++) {
+																// Determine suffix
+																if ($i % 10 == 1 && $i != 11) {
+																	$suffix = "st";
+																} elseif ($i % 10 == 2 && $i != 12) {
+																	$suffix = "nd";
+																} elseif ($i % 10 == 3 && $i != 13) {
+																	$suffix = "rd";
+																} else {
+																	$suffix = "th";
+																}
+															
+																echo "<option value=\"$i\">$i$suffix</option>\n";
+																}
+														?>
 													</select>
+													<label style="font-size: 1vw;"><b> day, </b></label>
+
 												</div>	
-												
 												<label style="font-size: 1vw;"><b> at </b></label>
-												<input type="text" placeholder="Hr" name="hourValue" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+												<input type="text" placeholder="Hr" name="hourValue" style="width: calc(2rem + 0.40vw); height: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
 												<label style="font-size: 1vw;"><b>:</b></label>
-												<input type="text" placeholder="Min" name="minuteValue" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+												<input type="text" placeholder="Min" name="minuteValue" style="width: calc(3rem + 0.60vw); height: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
 												<div class="form-group">
-													<select class="dynamicDropdown" id="fourthDropdwon" name="ampm" style="width: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
+													<select class="dynamicDropdown" id="fourthDropdwon" name="ampm" style="width: calc(3rem + 1vw); font-size: calc(0.40rem + 0.60vw);"onchange="toggleThirdDropdown(); resizeDropdown(this);" required>
 														<option value="AM">AM</option>
 														<option value="PM">PM</option>
 													</select>
@@ -287,7 +297,7 @@ $user_meds = $db->query(
 															<option value="tablets">tablets</option>
 														</select>
 													</div>
-												
+													
 												</div>
 											</div>
 											<div class="row mb-3">
@@ -331,27 +341,25 @@ $user_meds = $db->query(
 	<!-- Custom JavaScript -->
     <!--script src="js/scripts.js"></script-->
 	<script> 
-	function toggleDropdowns() {
+	function toggleThirdDropdown() {
 		var secondDropdown = document.getElementById("secondDropdown");
 		var DayDropDown = document.getElementById("DayDropDown");
 		var MonthDropDown = document.getElementById("MonthDropDown");
 
 		
 		// Show second dropdown if the specific option is selected
-		if (secondDropdown.value == "week") {
+		if (secondDropdown.value == "2") {
 			DayDropDown.style.display = "block";
 			MonthDropDown.style.display = "none";
-		} else if (secondDropdown.value == "month") {
+		} else if(secondDropdown.value == "3"){
 			DayDropDown.style.display = "none";
 			MonthDropDown.style.display = "block";
 		} else {
 			DayDropDown.style.display = "none";
 			MonthDropDown.style.display = "none";
-
 		}
 	}
 	</script>
-	
 	<script>
 		function toggleCustomMed() {
 			var dropdown = document.getElementById("databaseMedication");
