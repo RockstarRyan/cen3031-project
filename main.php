@@ -431,15 +431,6 @@ $user_meds = $db->query(
         document.getElementById('medicationName').value = medication;
 		medicationInput.style.width = (medicationInput.value.length + 1) + 'ch';
     });
-
-    // const addModal = document.getElementById('addModal');
-    // addModal.addEventListener('show.bs.modal', function (event) {            
-    //     const customMedicationButton = document.getElementById("customMedication");
-        
-    //     // Ensure event listener is added only once
-    //     customMedicationButton.removeEventListener("click", toggleCustomMed); // Remove any existing listener
-    //     customMedicationButton.addEventListener("click", toggleCustomMed);
-    // });
 </script>
 
 </body>
