@@ -125,12 +125,15 @@ $user_meds = $db->query(
 										</button> 
 									</div>
 										</td>";
-									echo"<td style=\" text-align: center; vertical-align: middle;\">
-									<button class=\"btn btn-delete\" data-intake-id=\"deleteMedication\" onclick=\"deleteMedication(this)\">
-										<img src=\"images/xmark.png\" alt=\"Delete\" style=\"width: 24px; height: 24px;\">
-									</button> 
-										</td>";
-									echo "</tr>";
+										echo "<td style=\"text-align: center; vertical-align: middle;\">";
+										echo "<form id=\"deleteForm_{$med['PrescriptionID']}\" method=\"post\" action=\"dbdelete.php\">";
+										echo "<input type=\"hidden\" name=\"PrescriptionID\" value=\"{$med['PrescriptionID']}\">";
+										echo "<button type=\"submit\" class=\"btn btn-delete\">";
+										echo "<img src=\"images/xmark.png\" alt=\"Delete\" style=\"width: 24px; height: 24px;\">";
+										echo "</button>";
+										echo "</form>";
+										echo "</td>";
+										echo "</tr>";
 								}
 								?>
 							  </tbody>
@@ -313,7 +316,7 @@ $user_meds = $db->query(
 									</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-primary" onclick="document.getElementById('saveMed').submit()">Save Perscription</button>
+									<button type="submit" class="btn btn-primary" onclick="document.getElementById('saveMed').submit()">Save Prescription</button>
 								</div>
 							</form>
 						</div>

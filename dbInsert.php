@@ -8,20 +8,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $MedicationID = 0;
     $isCustom = false;
 
-    // References prescription count in order to allow new prescriptions to fill the next available id spot
+    // References the highest existing PrescriptionID to avoid conflicts
     $table_name = "prescriptions";
-    $sql1 = "SELECT COUNT(*) AS pID_count FROM $table_name";
-    $pID_count = $db->query($sql1)->fetch_assoc()['pID_count'];
+    $sql1 = "SELECT MAX(PrescriptionID) AS max_pID FROM $table_name";
+    $result = $db->query($sql1);
+    $max_pID = $result->fetch_assoc()['max_pID'];
 
-    // References medication count in order to allow new medications to fill the next available id spot
+    // References the highest existing MedicationID to avoid conflicts
     $table_name = "medications";
-    $sql1 = "SELECT COUNT(*) AS mID_count FROM $table_name";
-    $mID_count = $db->query($sql1)->fetch_assoc()['mID_count'];
+    $sql1 = "SELECT MAX(MedicationID) AS max_mID FROM $table_name";
+    $result = $db->query($sql1);
+    $max_mID = $result->fetch_assoc()['max_mID'];
 
-    // References medication count in order to allow new medications to fill the next available id spot
+    // References the highest existing IntakeID to avoid conflicts
     $table_name = "intakes";
-    $sql1 = "SELECT COUNT(*) AS iID_count FROM $table_name";
-    $iID_count = $db->query($sql1)->fetch_assoc()['iID_count'];
+    $sql1 = "SELECT MAX(IntakeID) AS max_iID FROM $table_name";
+    $result = $db->query($sql1);
+    $max_iID = $result->fetch_assoc()['max_iID'];
+
 
     //Ensures all parameters are set in order to correctly add to the database
     if ((isset($_POST['MedicationID']) || (isset($_POST['MedicationNameCustom']) 
@@ -33,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['MedicationNameCustom']) && isset($_POST['MedicationBrandCustom'])
         && (!empty($_POST['MedicationNameCustom']) && !empty($_POST['MedicationBrandCustom']))){
             $isCustom = true;
-            $MedicationID = $mID_count + 2;
+            $MedicationID = $max_mID !== null ? $max_mID + 1 : 1;
             $MedicationBrand = $_POST['MedicationBrandCustom'];
             $MedicationName = $_POST['MedicationNameCustom'];
 
@@ -53,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         //Adds prescription to the database using either selected medication or the created custom one
-        $PrescriptionID = $pID_count + 2; 
+        $PrescriptionID = $max_pID !== null ? $max_pID + 1 : 1; // Start at 1 if no rows exist 
         $UserID = (int)$_SESSION['UserID'];
         //May have to adjust for custom med
         if (!$isCustom){
@@ -91,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // //Insertion queries for Add intake
 
 
-// $IntakeID = $iID_count + 2;
+//$IntakeID = $max_iID !== null ? $max_iID + 1 : 1; // Start at 1 if no rows exist
 // $PrescriptionID = REFERENCE THE ROW THE INTAKE IS BEING ADDED TO;
 // $IntakeTime = "deafault text here";
 
