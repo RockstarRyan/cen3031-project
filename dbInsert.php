@@ -30,7 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     && (isset($_POST['PrescriptionUnit']))) {
         
         //Checks if a custom medication is being added and adds that first if so
-        if (isset($_POST['MedicationNameCustom']) && isset($_POST['MedicationBrandCustom'])){
+        if (isset($_POST['MedicationNameCustom']) && isset($_POST['MedicationBrandCustom'])
+        && (!empty($_POST['MedicationNameCustom']) && !empty($_POST['MedicationBrandCustom']))){
             $isCustom = true;
             $MedicationID = $mID_count + 2;
             $MedicationBrand = $_POST['MedicationBrandCustom'];
@@ -87,42 +88,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-//Insertion queries for Add intake
+// //Insertion queries for Add intake
 
 
-$IntakeID = $iID_count + 2;
-$PrescriptionID = REFERENCE THE ROW THE INTAKE IS BEING ADDED TO;
-$IntakeTime = "deafault text here";
+// $IntakeID = $iID_count + 2;
+// $PrescriptionID = REFERENCE THE ROW THE INTAKE IS BEING ADDED TO;
+// $IntakeTime = "deafault text here";
 
-// defining variables for IntakeTime text construction
-$hourValue = $_POST['hourValue'];
-$minuteValue = $_POST['minuteValue'];
-$ampm = $_POST['ampm'];
+// // defining variables for IntakeTime text construction
+// $hourValue = $_POST['hourValue'];
+// $minuteValue = $_POST['minuteValue'];
+// $ampm = $_POST['ampm'];
 
-if($_POST['timeframe'] == "1"){
-    $IntakeTime = "Everyday at {$hourvalue}:{$minutevalue} $ampm";
-}
-if($_POST['timeframe'] == "2"){
-    $weekday = $_POST['weekday'];
-    $IntakeTime = "$weekday at {$hourvalue}:{$minutevalue} $ampm";
-}
-if($_POST['timeframe'] == "2"){
-    $IntakeTime = "Every month at {$hourvalue}:{$minutevalue} $ampm";
-}
+// if($_POST['timeframe'] == "1"){
+//     $IntakeTime = "Everyday at {$hourvalue}:{$minutevalue} $ampm";
+// }
+// if($_POST['timeframe'] == "2"){
+//     $weekday = $_POST['weekday'];
+//     $IntakeTime = "$weekday at {$hourvalue}:{$minutevalue} $ampm";
+// }
+// if($_POST['timeframe'] == "2"){
+//     $IntakeTime = "Every month at {$hourvalue}:{$minutevalue} $ampm";
+// }
 
 
-$insertion = $db->prepare("INSERT INTO intakes (IntakeID, PrescriptionID, IntakeTime) VALUES (?, ?, ?)");
-$insertion->bind_param("iis", $IntakeID, $PrescriptionID, $IntakeTime);
+// $insertion = $db->prepare("INSERT INTO intakes (IntakeID, PrescriptionID, IntakeTime) VALUES (?, ?, ?)");
+// $insertion->bind_param("iis", $IntakeID, $PrescriptionID, $IntakeTime);
 
-// Execute the statement
-if ($insertion->execute()) {
-    $yay = 'yay';
-} else {
-    echo "Error: " . $insertion->error;
-}
+// // Execute the statement
+// if ($insertion->execute()) {
+//     $yay = 'yay';
+// } else {
+//     echo "Error: " . $insertion->error;
+// }
 
-// Close the statement and connection
-$insertion->close();
+// // Close the statement and connection
+// $insertion->close();
 
 
 

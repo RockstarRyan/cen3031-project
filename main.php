@@ -367,8 +367,8 @@ $user_meds = $db->query(
 			var medbutton = document.getElementById("medicationButton");
 			var field1 = document.getElementById("MedicationNameDatabase");
 			var field2 = document.getElementById("MedicationBrandDatabase");
-			var field1 = document.getElementById("MedicationNameCustom");
-			var field2 = document.getElementById("MedicationBrandCustom");
+			var field3 = document.getElementById("MedicationNameCustom");
+			var field4 = document.getElementById("MedicationBrandCustom");
 			
 
 			// Toggle between hiding and showing the menu
@@ -384,7 +384,6 @@ $user_meds = $db->query(
 				field4.required = false;
 				
 			} else {
-				dropdown.disabled = false;
 				dropdown.style.display = "none";
 				custom.style.display = "block";
 				medbutton.textContent = "Database Medication";
@@ -433,14 +432,14 @@ $user_meds = $db->query(
 		medicationInput.style.width = (medicationInput.value.length + 1) + 'ch';
     });
 
-    const addModal = document.getElementById('addModal');
-    addModal.addEventListener('show.bs.modal', function (event) {            
-        const customMedicationButton = document.getElementById("customMedication");
+    // const addModal = document.getElementById('addModal');
+    // addModal.addEventListener('show.bs.modal', function (event) {            
+    //     const customMedicationButton = document.getElementById("customMedication");
         
-        // Ensure event listener is added only once
-        customMedicationButton.removeEventListener("click", toggleCustomMed); // Remove any existing listener
-        customMedicationButton.addEventListener("click", toggleCustomMed);
-    });
+    //     // Ensure event listener is added only once
+    //     customMedicationButton.removeEventListener("click", toggleCustomMed); // Remove any existing listener
+    //     customMedicationButton.addEventListener("click", toggleCustomMed);
+    // });
 </script>
 
 </body>
