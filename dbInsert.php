@@ -4,6 +4,32 @@ include_once("includes/site_construct.inc");
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'] ?? '';
+
+    switch ($action) {
+        case 'savePrescription':
+            handleSavePrescription($db);
+            break;
+
+        // case 'deletePrescription':
+        //     // Code to delete a prescription
+        //     handleDeletePrescription($db);
+        //     break;
+
+        case 'addIntake':
+            // Code to add an intake
+            handleAddIntake($db);
+            break;
+
+        default:
+            // Redirect or handle invalid actions
+            redirect('main.php');
+            break;
+    }
+
+}
+
+function handleSavePrescription($db) {
     //Instantiating for potential changing depending on whether or not it is a custom medication
     $MedicationID = 0;
     $isCustom = false;
@@ -19,12 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql1 = "SELECT MAX(MedicationID) AS max_mID FROM $table_name";
     $result = $db->query($sql1);
     $max_mID = $result->fetch_assoc()['max_mID'];
-
-    // References the highest existing IntakeID to avoid conflicts
-    $table_name = "intakes";
-    $sql1 = "SELECT MAX(IntakeID) AS max_iID FROM $table_name";
-    $result = $db->query($sql1);
-    $max_iID = $result->fetch_assoc()['max_iID'];
 
 
     //Ensures all parameters are set in order to correctly add to the database
@@ -91,43 +111,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
+function handleAddIntake($db) {
 
-// //Insertion queries for Add intake
+ // References the highest existing IntakeID to avoid conflicts
+ $table_name = "intakes";
+ $sql1 = "SELECT MAX(IntakeID) AS max_iID FROM $table_name";
+ $result = $db->query($sql1);
+ $max_iID = $result->fetch_assoc()['max_iID'];
 
+//Insertion queries for Add intake
+$IntakeID = $max_iID !== null ? $max_iID + 1 : 1; // Start at 1 if no rows exist
+$PrescriptionID = $_POST['PrescriptionID'];
+$IntakeTime = "deafault text here";
 
-//$IntakeID = $max_iID !== null ? $max_iID + 1 : 1; // Start at 1 if no rows exist
-// $PrescriptionID = REFERENCE THE ROW THE INTAKE IS BEING ADDED TO;
-// $IntakeTime = "deafault text here";
+// defining variables for IntakeTime text construction
+$hourValue = $_POST['hourValue'];
+$minuteValue = $_POST['minuteValue'];
+$ampm = $_POST['ampm'];
 
-// // defining variables for IntakeTime text construction
-// $hourValue = $_POST['hourValue'];
-// $minuteValue = $_POST['minuteValue'];
-// $ampm = $_POST['ampm'];
+if($_POST['timeframe'] == "1"){
+    $IntakeTime = "Everyday at {$hourValue}:{$minuteValue} $ampm";
+}
+if($_POST['timeframe'] == "2"){
+    $weekday = $_POST['weekday'];
+    $IntakeTime = "$weekday at {$hourValue}:{$minuteValue} $ampm";
+}
+if($_POST['timeframe'] == "3"){
+    $IntakeTime = "Every month at {$hourValue}:{$minuteValue} $ampm";
+}
 
-// if($_POST['timeframe'] == "1"){
-//     $IntakeTime = "Everyday at {$hourvalue}:{$minutevalue} $ampm";
-// }
-// if($_POST['timeframe'] == "2"){
-//     $weekday = $_POST['weekday'];
-//     $IntakeTime = "$weekday at {$hourvalue}:{$minutevalue} $ampm";
-// }
-// if($_POST['timeframe'] == "2"){
-//     $IntakeTime = "Every month at {$hourvalue}:{$minutevalue} $ampm";
-// }
+$insertion = $db->prepare("INSERT INTO intakes (IntakeID, PrescriptionID, IntakeTime) VALUES (?, ?, ?)");
+$insertion->bind_param("iis", $IntakeID, $PrescriptionID, $IntakeTime);
 
+// Execute the statement
+if ($insertion->execute()) {
+    $yay = 'yay';
+} else {
+    echo "Error: " . $insertion->error;
+}
 
-// $insertion = $db->prepare("INSERT INTO intakes (IntakeID, PrescriptionID, IntakeTime) VALUES (?, ?, ?)");
-// $insertion->bind_param("iis", $IntakeID, $PrescriptionID, $IntakeTime);
+// Close the statement and connection
+$insertion->close();
 
-// // Execute the statement
-// if ($insertion->execute()) {
-//     $yay = 'yay';
-// } else {
-//     echo "Error: " . $insertion->error;
-// }
+redirect('main.php');
 
-// // Close the statement and connection
-// $insertion->close();
+}
 
 
 

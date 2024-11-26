@@ -29,6 +29,20 @@ $user_meds = $db->query(
         prescriptions.UserID = $user_id
 ")->fetch_all(MYSQLI_ASSOC);
 
+$user_intakes = $db->query(
+	"SELECT 
+		intakes.IntakeID,
+		intakes.PrescriptionID,
+		intakes.IntakeTime,
+        prescriptions.PrescriptionID,
+		prescriptions.UserID
+    FROM 
+        intakes
+    INNER JOIN 
+        prescriptions ON intakes.PrescriptionID = prescriptions.PrescriptionID
+    WHERE 
+        prescriptions.UserID = $user_id
+")->fetch_all(MYSQLI_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -101,7 +115,7 @@ $user_meds = $db->query(
 								</tr>
 							 </thead>
 							  <tbody>
-							  <?php
+								<?php
 								foreach ($user_meds as $med) {
 									echo "<tr>";
 									echo "<td><img src=\"images/medication_".$med["MedicationID"].".jpg\" alt=\"{$med['MedicationID']}\" class=\"pill1\" style=\"width: 10vw; height: 10vw;\"></td>";
@@ -113,17 +127,26 @@ $user_meds = $db->query(
 									<button class=\"btn btn-custom\"
 									data-bs-toggle=\"modal\" 
 									data-bs-target=\"#intakeModal\"
+									data-prescription-id=\"" . $med['PrescriptionID'] . "\"
 									data-medication=\"" . $med['MedicationBrand'] . ", " . $med['MedicationName'] . "\"
 									>Add Intake</button>
 									</div>
 									<!-- the lines under this before <\td> is the temp for intake format + delete button for each, needs to be in a for loop per intake, user_meds needs to populate intake data so that IntakeTime can be used-->
 									<!-- replace the div here with the for loop logic, it is just keeping the format for now-->
-									<div>
-										<label class=\"text-wrap d-inline\">Take [PrescriptionDosage] per [IntakeTime]</label>
-										<button class=\"btn btn-delete d-inline\" data-intake-id=\"deleteIntake\" onclick=\"deleteIntake(this)\">
-											<img src=\"images/xmark.png\" alt=\"Delete\" style=\"width: 12px; height: 12px;\">
-										</button> 
-									</div>
+
+									<div>";
+									foreach ($user_intakes as $intake) {
+										echo "<div>
+												<label class=\"text-wrap d-inline\">Take " . htmlspecialchars($med['PrescriptionDosage'], ENT_QUOTES, 'UTF-8') . " per " . htmlspecialchars($intake['IntakeTime'], ENT_QUOTES, 'UTF-8') . "</label>
+												<button class=\"btn btn-delete d-inline\" data-intake-id=\"" . htmlspecialchars($intake['IntakeID'], ENT_QUOTES, 'UTF-8') . "\" onclick=\"deleteIntake(this)\">
+													<img src=\"images/xmark.png\" alt=\"Delete\" style=\"width: 12px; height: 12px;\">
+												</button>
+											</div>";
+									}
+									echo "</div>
+
+
+
 										</td>";
 										echo "<td style=\"text-align: center; vertical-align: middle;\">";
 										echo "<form id=\"deleteForm_{$med['PrescriptionID']}\" method=\"post\" action=\"dbdelete.php\">";
@@ -146,7 +169,8 @@ $user_meds = $db->query(
 				<div class="modal fade" id="intakeModal" tabindex="-1" aria-labelledby="intakeModalLabel" aria-hidden="true">
 					<div class="modal-dialog model-dialog-centered modal-xl">
 						<div class="modal-content">
-							<form>
+						<form id="addIntake" method="POST" action="dbInsert.php">	
+						<input type="hidden" name="PrescriptionID">	
 								<div class="modal-header">
 									<h1 class="modal-title" id="intakeModalLabel">Add Intake</h2>
 									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -221,7 +245,7 @@ $user_meds = $db->query(
 														?>
 													</select>
 													<label style="font-size: 1vw;"><b> day, </b></label>
-
+														
 												</div>	
 												<label style="font-size: 1vw;"><b> at </b></label>
 												<input type="text" placeholder="Hr" name="hourValue" style="width: calc(2rem + 0.40vw); height: calc(2rem + 0.40vw); font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
@@ -240,9 +264,9 @@ $user_meds = $db->query(
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-primary">Save Intake</button>
+									<button type="submit" class="btn btn-primary" name="action" value="addIntake">Save Intake</button>
+									</form>
 								</div>
-							</form>
 						</div>
 					</div>
 				</div>
@@ -251,7 +275,8 @@ $user_meds = $db->query(
 				<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
 					<div class="modal-dialog model-dialog-centered modal-xl">
 						<div class="modal-content">
-							<form id="saveMed" method="post" action="dbInsert.php">
+							<form id="saveMed" method="POST" action="dbInsert.php">
+							<input type="hidden" name="action" value="savePrescription">
 								<div class="modal-header">
 									<h1 class="modal-title" id="addModalLabel">Add New Perscription</h2>
 									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -434,6 +459,56 @@ $user_meds = $db->query(
         document.getElementById('medicationName').value = medication;
 		medicationInput.style.width = (medicationInput.value.length + 1) + 'ch';
     });
+	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+    // Select all buttons that open the intake modal
+    const intakeButtons = document.querySelectorAll('.btn[data-bs-target="#intakeModal"]');
+    const intakeModal = document.querySelector('#intakeModal');
+    const prescriptionIdInput = intakeModal.querySelector('input[name="PrescriptionID"]');
+    const medicationNameInput = intakeModal.querySelector('#medicationName');
+
+    intakeButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const prescriptionId = this.getAttribute('data-prescription-id');
+            const medicationName = this.getAttribute('data-medication');
+            
+            // Set the PrescriptionID in the hidden input
+            prescriptionIdInput.value = prescriptionId;
+
+            // Optionally set the medication name for display
+            medicationNameInput.value = medicationName;
+        });
+    });
+});
+	</script>
+	<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const intakeModal = document.getElementById('intakeModal');
+		intakeModal.addEventListener('show.bs.modal', (event) => {
+			// Button that triggered the modal
+			const button = event.relatedTarget;
+	
+			// Extract data attributes
+			const prescriptionId = button.getAttribute('data-prescription-id');
+			const medicationName = button.getAttribute('data-medication');
+	
+			// Populate modal fields
+			document.getElementById('medicationName').value = medicationName;
+	
+			// Add PrescriptionID to the form as a hidden input
+			const form = document.getElementById('addIntake');
+			let hiddenInput = form.querySelector('input[name="PrescriptionID"]');
+			if (!hiddenInput) {
+				hiddenInput = document.createElement('input');
+				hiddenInput.type = 'hidden';
+				hiddenInput.name = 'PrescriptionID';
+				form.appendChild(hiddenInput);
+			}
+			hiddenInput.value = prescriptionId;
+		});
+	});
+
 </script>
 
 </body>
