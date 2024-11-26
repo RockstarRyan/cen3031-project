@@ -135,7 +135,7 @@ $user_intakes = $db->query(
 									foreach ($user_intakes as $intake) {
 										if ($med['PrescriptionID'] == $intake['PrescriptionID']) {
 											echo "<div>";
-											echo "<label class=\"text-wrap d-inline\">Take " . $med['PrescriptionDosage'] . " " . $med['PrescriptionUnit'] . " at " . $intake['IntakeTime'] . "</label>";
+											echo "<label class=\"text-wrap d-inline\">Take " . $med['PrescriptionDosage'] . " " . $med['PrescriptionUnit'] . " " . $intake['IntakeTime'] . "</label>";
 											echo "<form id=\"deleteForm_" . $intake['IntakeID'] . "\" method=\"post\" action=\"dbdeleteIntakes.php\">";
 											echo "<input type=\"hidden\" name=\"IntakeID\" value=\"" . $intake['IntakeID'] . "\">";
 											echo "<button type=\"submit\" class=\"btn btn-delete d-inline\">";
@@ -239,7 +239,7 @@ $user_intakes = $db->query(
 																	$suffix = "th";
 																}
 															
-																echo "<option value=\"$i\">$i$suffix</option>\n";
+																echo "<option value=\"$i{$suffix}\">$i$suffix</option>\n";
 																}
 														?>
 													</select>
