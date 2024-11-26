@@ -114,54 +114,51 @@ $user_intakes = $db->query(
 									<th scope="col">Delete</th>
 								</tr>
 							 </thead>
-							  <tbody>
+							 <tbody>
 								<?php
 								foreach ($user_meds as $med) {
 									echo "<tr>";
-									echo "<td><img src=\"images/medication_".$med["MedicationID"].".jpg\" alt=\"{$med['MedicationID']}\" class=\"pill1\" style=\"width: 10vw; height: 10vw;\"></td>";
-									echo "<td class=\"text-wrap\">{$med['MedicationName']}</td>";
-									echo "<td class=\"text-wrap\">{$med['PrescriptionDosage']} {$med['PrescriptionUnit']}</td>";
-									echo "<td class=\"text-wrap\">".$med["PrescriptionNotes"]."</td>";
+									echo "<td><img src=\"images/medication_" . $med["MedicationID"] . ".jpg\" alt=\"" . $med['MedicationID'] . "\" class=\"pill1\" style=\"width: 10vw; height: 10vw;\"></td>";
+									echo "<td class=\"text-wrap\">" . $med['MedicationName'] . "</td>";
+									echo "<td class=\"text-wrap\">" . $med['PrescriptionDosage'] . " " . $med['PrescriptionUnit'] . "</td>";
+									echo "<td class=\"text-wrap\">" . $med["PrescriptionNotes"] . "</td>";
 									echo "<td class=\"text-wrap\">
-									<div class=\"text-center\">
-									<button class=\"btn btn-custom\"
-									data-bs-toggle=\"modal\" 
-									data-bs-target=\"#intakeModal\"
-									data-prescription-id=\"" . $med['PrescriptionID'] . "\"
-									data-medication=\"" . $med['MedicationBrand'] . ", " . $med['MedicationName'] . "\"
-									>Add Intake</button>
-									</div>
-									<!-- the lines under this before <\td> is the temp for intake format + delete button for each, needs to be in a for loop per intake, user_meds needs to populate intake data so that IntakeTime can be used-->
-									<!-- replace the div here with the for loop logic, it is just keeping the format for now-->
-
-									<div>";
+										<div class=\"text-center\">
+											<button class=\"btn btn-custom\"
+												data-bs-toggle=\"modal\" 
+												data-bs-target=\"#intakeModal\"
+												data-prescription-id=\"" . $med['PrescriptionID'] . "\"
+												data-medication=\"" . $med['MedicationBrand'] . ", " . $med['MedicationName'] . "\"
+											>Add Intake</button>
+										</div>
+										<div>";
 									foreach ($user_intakes as $intake) {
-										if ($med['PrescriptionID'] == $intake['PrescriptionID']){
-											echo "<div>
-												<label class=\"text-wrap d-inline\">Take " . htmlspecialchars($med['PrescriptionDosage'], ENT_QUOTES, 'UTF-8') . " per " . htmlspecialchars($intake['IntakeTime'], ENT_QUOTES, 'UTF-8') . "</label>
-												<button class=\"btn btn-delete d-inline\" data-intake-id=\"" . htmlspecialchars($intake['IntakeID'], ENT_QUOTES, 'UTF-8') . "\" onclick=\"deleteIntake(this)\">
-													<img src=\"images/xmark.png\" alt=\"Delete\" style=\"width: 12px; height: 12px;\">
-												</button>
-											</div>";
+										if ($med['PrescriptionID'] == $intake['PrescriptionID']) {
+											echo "<div>";
+											echo "<label class=\"text-wrap d-inline\">Take " . $med['PrescriptionDosage'] . " " . $med['PrescriptionUnit'] . " at " . $intake['IntakeTime'] . "</label>";
+											echo "<form id=\"deleteForm_" . $intake['IntakeID'] . "\" method=\"post\" action=\"dbdeleteIntakes.php\">";
+											echo "<input type=\"hidden\" name=\"IntakeID\" value=\"" . $intake['IntakeID'] . "\">";
+											echo "<button type=\"submit\" class=\"btn btn-delete d-inline\">";
+											echo "<img src=\"images/xmark.png\" alt=\"Delete\" style=\"width: 12px; height: 12px;\">";
+											echo "</button>";
+											echo "</form>";
+											echo "</div>";
 										}
 									}
 									echo "</div>
-
-
-
 										</td>";
-										echo "<td style=\"text-align: center; vertical-align: middle;\">";
-										echo "<form id=\"deleteForm_{$med['PrescriptionID']}\" method=\"post\" action=\"dbdelete.php\">";
-										echo "<input type=\"hidden\" name=\"PrescriptionID\" value=\"{$med['PrescriptionID']}\">";
-										echo "<button type=\"submit\" class=\"btn btn-delete\">";
-										echo "<img src=\"images/xmark.png\" alt=\"Delete\" style=\"width: 24px; height: 24px;\">";
-										echo "</button>";
-										echo "</form>";
-										echo "</td>";
-										echo "</tr>";
+									echo "<td style=\"text-align: center; vertical-align: middle;\">";
+									echo "<form id=\"deleteForm_" . $med['PrescriptionID'] . "\" method=\"post\" action=\"dbdelete.php\">";
+									echo "<input type=\"hidden\" name=\"PrescriptionID\" value=\"" . $med['PrescriptionID'] . "\">";
+									echo "<button type=\"submit\" class=\"btn btn-delete\">";
+									echo "<img src=\"images/xmark.png\" alt=\"Delete\" style=\"width: 24px; height: 24px;\">";
+									echo "</button>";
+									echo "</form>";
+									echo "</td>";
+									echo "</tr>";
 								}
 								?>
-							  </tbody>
+							</tbody>
 						</table>
 					</div>
 				</div>
@@ -217,18 +214,18 @@ $user_intakes = $db->query(
 												<div class="form-group" id="DayDropDown" style="display: none; width: auto; font-size: calc(0.40rem + 0.60vw);" >
 													<label style="font-size: 1vw;"><b> on </b></label>
 													<select class="dynamicDropdown" id="thirdDropdownSelect" name="weekday" onchange="resizeDropdown(this)">
-														<option value="M">Monday</option>
-														<option value="T">Tuesday</option>
-														<option value="W">Wednesday</option>
-														<option value="R">Thursday</option>
-														<option value="F">Friday</option>
-														<option value="Sat">Saturday</option>
-														<option value="S">Sunday</option>
+														<option value="Monday">Monday</option>
+														<option value="Tuesday">Tuesday</option>
+														<option value="Wednesday">Wednesday</option>
+														<option value="Thursday">Thursday</option>
+														<option value="Friday">Friday</option>
+														<option value="Saturday">Saturday</option>
+														<option value="Sunday">Sunday</option>
 													</select>
 												</div>	
 												<div class="form-group" id="MonthDropDown" style="display: none; width: auto; font-size: calc(0.40rem + 0.60vw);" >
 													<label style="font-size: 1vw;"><b> on the </b></label>
-													<select class="dynamicDropdown" id="fourthDropdownSelect" name="monthDay" onchange="resizeDropdown(this)">
+													<select class="dynamicDropdown" id="fourthDropdownSelect" name="monthdate" onchange="resizeDropdown(this)">
 														<?php
 															for ($i = 1; $i <= 31; $i++) {
 																// Determine suffix

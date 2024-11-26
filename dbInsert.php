@@ -130,14 +130,15 @@ $minuteValue = $_POST['minuteValue'];
 $ampm = $_POST['ampm'];
 
 if($_POST['timeframe'] == "1"){
-    $IntakeTime = "Everyday at {$hourValue}:{$minuteValue} $ampm";
+    $IntakeTime = "everyday at {$hourValue}:{$minuteValue} $ampm";
 }
 if($_POST['timeframe'] == "2"){
     $weekday = $_POST['weekday'];
-    $IntakeTime = "$weekday at {$hourValue}:{$minuteValue} $ampm";
+    $IntakeTime = "every $weekday at {$hourValue}:{$minuteValue} $ampm";
 }
 if($_POST['timeframe'] == "3"){
-    $IntakeTime = "Every month at {$hourValue}:{$minuteValue} $ampm";
+    $monthdate = $_POST['monthdate'];
+    $IntakeTime = "every month on the {$monthdate} at {$hourValue}:{$minuteValue} $ampm";
 }
 
 $insertion = $db->prepare("INSERT INTO intakes (IntakeID, PrescriptionID, IntakeTime) VALUES (?, ?, ?)");
