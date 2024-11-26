@@ -136,12 +136,14 @@ $user_intakes = $db->query(
 
 									<div>";
 									foreach ($user_intakes as $intake) {
-										echo "<div>
+										if ($med['PrescriptionID'] == $intake['PrescriptionID']){
+											echo "<div>
 												<label class=\"text-wrap d-inline\">Take " . htmlspecialchars($med['PrescriptionDosage'], ENT_QUOTES, 'UTF-8') . " per " . htmlspecialchars($intake['IntakeTime'], ENT_QUOTES, 'UTF-8') . "</label>
 												<button class=\"btn btn-delete d-inline\" data-intake-id=\"" . htmlspecialchars($intake['IntakeID'], ENT_QUOTES, 'UTF-8') . "\" onclick=\"deleteIntake(this)\">
 													<img src=\"images/xmark.png\" alt=\"Delete\" style=\"width: 12px; height: 12px;\">
 												</button>
 											</div>";
+										}
 									}
 									echo "</div>
 
