@@ -313,11 +313,11 @@ $user_intakes = $db->query(
 												</div>
 												<div class="col-8 d-flex flex-wrap" style="display: flex; gap: 10px;">
 													<div class="form-group">
-														<input type="text" placeholder="Type..." name="medicationAmount" style="width: auto; font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
+														<input type="text" placeholder="Amount..." name="medicationAmount" style="width: auto; font-size: calc(0.40rem + 0.60vw);" oninput="this.style.width = (this.value.length + 2) + 'ch'" required></input>	
 													</div>
 													<div class="form-group">
 														<select class="dynamicDropdown" id="PrescriptionUnit" name="PrescriptionUnit" style="width: auto; font-size: calc(0.40rem + 0.60vw);" onchange="resizeDropdown(this)" required>
-															<option value="" disabled selected>Select an amount</option>
+															<option value="" disabled selected>Select a type</option>
 															<option value="mg">mg</option>
 															<option value="ml">ml</option>
 															<option value="capsules">capsules</option>
