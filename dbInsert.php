@@ -113,48 +113,48 @@ function handleSavePrescription($db) {
 
 function handleAddIntake($db) {
 
- // References the highest existing IntakeID to avoid conflicts
- $table_name = "intakes";
- $sql1 = "SELECT MAX(IntakeID) AS max_iID FROM $table_name";
- $result = $db->query($sql1);
- $max_iID = $result->fetch_assoc()['max_iID'];
+    // References the highest existing IntakeID to avoid conflicts
+    $table_name = "intakes";
+    $sql1 = "SELECT MAX(IntakeID) AS max_iID FROM $table_name";
+    $result = $db->query($sql1);
+    $max_iID = $result->fetch_assoc()['max_iID'];
 
-//Insertion queries for Add intake
-$IntakeID = $max_iID !== null ? $max_iID + 1 : 1; // Start at 1 if no rows exist
-$PrescriptionID = $_POST['PrescriptionID'];
-$IntakeTime = "deafault text here";
+    //Insertion queries for Add intake
+    $IntakeID = $max_iID !== null ? $max_iID + 1 : 1; // Start at 1 if no rows exist
+    $PrescriptionID = $_POST['PrescriptionID'];
+    $IntakeTime = "deafault text here";
 
-// defining variables for IntakeTime text construction
-$hourValue = $_POST['hourValue'];
-$minuteValue = $_POST['minuteValue'];
-$ampm = $_POST['ampm'];
+    // defining variables for IntakeTime text construction
+    $hourValue = $_POST['hourValue'];
+    $minuteValue = $_POST['minuteValue'];
+    $ampm = $_POST['ampm'];
 
-if($_POST['timeframe'] == "1"){
-    $IntakeTime = "everyday at {$hourValue}:{$minuteValue} $ampm";
-}
-if($_POST['timeframe'] == "2"){
-    $weekday = $_POST['weekday'];
-    $IntakeTime = "every $weekday at {$hourValue}:{$minuteValue} $ampm";
-}
-if($_POST['timeframe'] == "3"){
-    $monthdate = $_POST['monthdate'];
-    $IntakeTime = "every month on the {$monthdate} at {$hourValue}:{$minuteValue} $ampm";
-}
+    if($_POST['timeframe'] == "1"){
+        $IntakeTime = "everyday at {$hourValue}:{$minuteValue} $ampm";
+    }
+    if($_POST['timeframe'] == "2"){
+        $weekday = $_POST['weekday'];
+        $IntakeTime = "every $weekday at {$hourValue}:{$minuteValue} $ampm";
+    }
+    if($_POST['timeframe'] == "3"){
+        $monthdate = $_POST['monthdate'];
+        $IntakeTime = "every month on the {$monthdate} at {$hourValue}:{$minuteValue} $ampm";
+    }
 
-$insertion = $db->prepare("INSERT INTO intakes (IntakeID, PrescriptionID, IntakeTime) VALUES (?, ?, ?)");
-$insertion->bind_param("iis", $IntakeID, $PrescriptionID, $IntakeTime);
+    $insertion = $db->prepare("INSERT INTO intakes (IntakeID, PrescriptionID, IntakeTime) VALUES (?, ?, ?)");
+    $insertion->bind_param("iis", $IntakeID, $PrescriptionID, $IntakeTime);
 
-// Execute the statement
-if ($insertion->execute()) {
-    $yay = 'yay';
-} else {
-    echo "Error: " . $insertion->error;
-}
+    // Execute the statement
+    if ($insertion->execute()) {
+        $yay = 'yay';
+    } else {
+        echo "Error: " . $insertion->error;
+    }
 
-// Close the statement and connection
-$insertion->close();
+    // Close the statement and connection
+    $insertion->close();
 
-redirect('main.php');
+    redirect('main.php');
 
 }
 
